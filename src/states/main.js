@@ -1,6 +1,6 @@
 import game from '../game';
 
-export default class MainState extends Phaser.State {
+export class MainState extends Phaser.State {
 	create() {
 
 		game.stage.backgroundColor = 0xffffff;

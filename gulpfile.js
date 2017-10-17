@@ -8,14 +8,24 @@ var connect = require('gulp-connect');
 gulp.task('build', function() {
 	gulp.src('./src/**/*.js')
 		.pipe(rollup({
-	  		entry: './src/game.js',
+	  		input: './src/game.js',
 			format: 'iife',
-			moduleName: 'game'
+			name: 'game'
 		}))
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		//.pipe(uglify())
+		.pipe(uglify())
+		.pipe(gulp.dest('dist'));
+});
+
+gulp.task('bundle', function() {
+	gulp.src('./src/**/*.js')
+		.pipe(rollup({
+	  		input: './src/game.js',
+			format: 'iife',
+			name: 'game'
+		}))
 		.pipe(gulp.dest('js'))
 		.pipe(connect.reload());
 });
@@ -31,4 +41,4 @@ gulp.task('watch', function() {
 	gulp.watch(['./src/**'], ['build']);
 })
 
-gulp.task('default', ['build', 'serve', 'watch']);
+gulp.task('develop', ['bundle', 'serve', 'watch']);
