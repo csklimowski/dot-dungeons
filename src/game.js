@@ -1,3 +1,5 @@
+import { LoadState } from './states/load';
+import { LevelSelectState } from './states/levelSelect';
 import { MainState } from './states/main';
 
 var game = new Phaser.Game(640, 360, Phaser.AUTO, 'game');
