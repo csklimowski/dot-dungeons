@@ -38,7 +38,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['./src/**'], ['build']);
+	gulp.watch(['./src/**'], ['bundle']);
 })
 
 gulp.task('develop', ['bundle', 'serve', 'watch']);
