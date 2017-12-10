@@ -3,27 +3,33 @@ import game from '../game';
 class MapTile extends Phaser.Sprite {
     constructor(x, y, type) {
         super(game, x, y, 'map-tile');
+        game.add.existing(this);
+
+        this.anchor.set(0.5);
         this.type = type;
+        this.frame = type;
+        this.visited = false;
     }
 }
 
 export function buildLevelMap(source) {
+    let layout = source.layout
     let map = [];
-    for (let y = 0; y < source.length; y++) {
+    for (let y = 0; y < layout.length; y++) {
         let row = [];
-        for (let x = 0; x < source[x].length; x++) {
-            if (source[y][x] === ' ') {
+        for (let x = 0; x < layout[y].length; x++) {
+            if (layout[y][x] === ' ') {
                 row.push(null);
-            } else if (source[y][x] === 'n') {
+            } else if (layout[y][x] === 'N') {
                 row.push(new MapTile(40*x, 40*y, 0));
                 map.startX = x;
                 map.startY = y;
-            } else if (source[y][x] === 'x') {
+            } else if (layout[y][x] === 'X') {
                 row.push(new MapTile(40*x, 40*y, 0));
                 map.endX = x;
                 map.endY = y;
             } else {
-                row.push(new MapTile(40*x, 40*y, Number.parseInt(source[y][x])));
+                row.push(new MapTile(40*x, 40*y, Number.parseInt(layout[y][x])));
             }
         }
         map.push(row);

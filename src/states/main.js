@@ -1,5 +1,5 @@
 import game from '../game';
-import buildLevelMap from '../util/map';
+import { buildLevelMap } from '../util/map';
 
 export class MainState extends Phaser.State {
 	create() {
@@ -12,15 +12,7 @@ export class MainState extends Phaser.State {
 			fill: '#000000'
 		});
 
-		let mapSrc = [
-			'          ',
-			' 00000000 ',
-			' 0n010010 ',
-			' 00000200 ',
-			'          '
-		];
-
-		this.map = buildLevelMap(mapSrc);
+		this.map = buildLevelMap(game.currentLevel);
 
 		this.player = {
 			x: this.map.startX,
@@ -41,29 +33,31 @@ export class MainState extends Phaser.State {
 			this.player.x = this.player.nextX;
 			this.player.y = this.player.nextY;
 
-			if (this.map[this.player.y][this.player.x].type === 2 && this.player.charge === 1) {
-				this.map[this.player.y][this.player.x].type = 1;
-			} else if (this.map[this.player.y][this.player.x].type === 3 && this.player.charge === 2) {
-				this.map[this.player.y][this.player.x].type = 1;
-			} else if (this.map[this.player.y][this.player.x].type === 4 && this.player.charge === 3) {
-				this.map[this.player.y][this.player.x].type = 1;
+			if (this.player.x === this.map.endX && this.player.y === this.map.endY) {
+				game.state.start('level-select');
+				return;
 			}
 
-			let visited = false;
-			for (let spot of this.path) {
-				if (spot.x === this.player.x && spot.y === this.player.y) {
-					visited = true;
-					break;
-				}
+			let dot = this.map[this.player.y][this.player.x];
+
+			if (this.player.charge >= 0 && this.player.charge === dot.type) {
+				dot.type = 0;
+				dot.frame = 0;
 			}
-			if (visited) this.player.charge++;
-			else         this.player.charge = 0;
+
+			if (dot.visited) {
+				this.player.charge++;
+			} else {
+				dot.visited = true;
+				this.player.charge = 0;
+			}
 			this.chargeText.text = this.player.charge;
 
 			this.path.push({
 				x: this.player.x,
 				y: this.player.y
 			});
+			
 			this.calculateValidMoves();
 			if (this.validMoves.length === 0) game.state.restart();
 		}, this);
@@ -110,30 +104,6 @@ export class MainState extends Phaser.State {
 		}
 		
 		//this.graphics.lineStyle(3, 0x88ccff);
-		for (let y = 0; y < this.map.length; y++) {
-			for (let x = 0; x < this.map[y].length; x++) {
-				if (this.map[y][x].type !== 0) {
-					if (this.map[y][x].type === 1) {
-						this.graphics.beginFill(0xaaaaaa);
-						this.graphics.drawCircle(this.map[y][x].realX, this.map[y][x].realY, 10);
-					}
-					if (this.map[y][x].type === 2) {
-						this.graphics.beginFill(0x0000ff);
-						this.graphics.drawCircle(this.map[y][x].realX, this.map[y][x].realY, 10);
-					}
-					if (this.map[y][x].type === 3) {
-						this.graphics.beginFill(0xff00ff);
-						this.graphics.drawCircle(this.map[y][x].realX, this.map[y][x].realY, 10);
-					}
-					if (this.map[y][x].type === 4) {
-						this.graphics.beginFill(0xff0000);
-						this.graphics.drawCircle(this.map[y][x].realX, this.map[y][x].realY, 10);
-					}
-					this.graphics.endFill();
-				}
-			}
-		}
-		
 		this.graphics.lineStyle(4, 0x444444);
 		this.graphics.moveTo(this.displayX(this.path[0].x), this.displayY(this.path[0].y));
 		for (let i = 1; i < this.path.length; i++) {
