@@ -127,8 +127,7 @@ export class MainState extends Phaser.State {
 				leastDistance = newDistance;
 			}
 		}
-		``
-		//this.graphics.lineStyle(3, 0x88ccff);
+		
 		this.graphics.lineStyle(4, 0x444444);
 		this.graphics.moveTo(this.displayX(this.path[0].x), this.displayY(this.path[0].y));
 		for (let i = 1; i < this.path.length; i++) {
@@ -136,18 +135,13 @@ export class MainState extends Phaser.State {
 		}
 		this.graphics.lineStyle(4, 0x444444, 0.15);
 		this.graphics.lineTo(this.displayX(this.player.nextX), this.displayY(this.player.nextY));
-		
-		//this.graphics.lineStyle(0);
-		//this.graphics.beginFill(0x0000ff);
-		//this.graphics.drawCircle(this.displayX(this.player.x), this.displayY(this.player.y), 10);
-		//this.graphics.endFill();
 	}
 	
 	displayX(x) { return 40*x; }
 	displayY(y) { return 50 + 40*y; }
 
 	undo() {
-		if (this.path.length <= 0) return;
+		if (this.path.length <= 1) return;
 		let last = this.path.pop();
 		this.player.x = this.path[this.path.length - 1].x;
 		this.player.y = this.path[this.path.length - 1].y;

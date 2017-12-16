@@ -1,6 +1,6 @@
 export const world1 = [
     {
-        id: '1-A',
+        id: 'Level 1',
         name: 'Where Is Everyone?',
         layout: [
             '         ',
@@ -13,7 +13,7 @@ export const world1 = [
         ],
     },
     {
-        id: '1-B',
+        id: 'Challenge 1',
         name: 'Oh There They Are',
         layout: [
             '         ',
@@ -26,7 +26,7 @@ export const world1 = [
         ]
     },
     {
-        id: '2-A',
+        id: 'Level 2',
         name: 'Closing In',
         layout: [
             '        ',
@@ -37,7 +37,7 @@ export const world1 = [
         ]
     },
     {
-        id: '2-B',
+        id: 'Challenge 2',
         name: 'Blockade',
         layout: [
             '        ',
@@ -48,7 +48,7 @@ export const world1 = [
         ]
     },
     {
-        id: '3-A',
+        id: 'Level 3',
         name: 'Hallway Fight',
         layout: [
             '         ',
@@ -58,7 +58,7 @@ export const world1 = [
         ]
     },
     {
-        id: '3-B',
+        id: 'Challenge 3',
         name: 'They Brought Friends',
         layout: [
             '         ',
@@ -68,7 +68,7 @@ export const world1 = [
         ]
     },
     {
-        id: '4-A',
+        id: 'Level 4',
         name: 'Four Corners',
         layout: [
             '        ',
@@ -79,7 +79,7 @@ export const world1 = [
         ]
     },
     {
-        id: '4-B',
+        id: 'Challenge 4',
         name: 'The Letter C',
         layout: [
             '        ',
@@ -90,7 +90,7 @@ export const world1 = [
         ]
     },
     {
-        id: '5-A',
+        id: 'Level 5',
         name: 'Line Them Up',
         layout: [
             '      ',
@@ -103,7 +103,7 @@ export const world1 = [
         ]
     },
     {
-        id: '5-B',
+        id: 'Challenge 5',
         name: 'Just One More',
         layout: [
             '      ',
@@ -116,7 +116,7 @@ export const world1 = [
         ]
     },
     {
-        id: '6-A',
+        id: 'Level 6',
         name: 'Twice the Pride',
         layout: [
             '        ',
@@ -127,7 +127,7 @@ export const world1 = [
         ]
     },
     {
-        id: '6-B',
+        id: 'Challenge 6',
         name: 'Double the Fall',
         layout: [
             '        ',
@@ -138,7 +138,7 @@ export const world1 = [
         ]
     },
     {
-        id: '7-A',
+        id: 'Level 7',
         name: 'Two By Two',
         layout: [
             '        ',
@@ -149,7 +149,7 @@ export const world1 = [
         ]
     },
     {
-        id: '7-B',
+        id: 'Challenge 7',
         name: 'One Problem',
         layout: [
             '        ',
