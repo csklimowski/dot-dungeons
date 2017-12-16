@@ -26,6 +26,9 @@ export class MainState extends Phaser.State {
 			x: this.map.startX,
 			y: this.map.startY
 		}];
+
+		this.exit = this.map[this.map.endY][this.map.endX];
+		this.map[this.map.startY][this.map.startX].visited = true;
 		
 		this.calculateValidMoves();
 
@@ -40,9 +43,14 @@ export class MainState extends Phaser.State {
 
 			let dot = this.map[this.player.y][this.player.x];
 
-			if (this.player.charge >= 0 && this.player.charge === dot.type) {
+			if (this.player.charge === dot.type) {
+				this.map.remaining -= dot.type;
 				dot.type = 0;
 				dot.frame = 0;
+				if (this.map.remaining === 0) {
+					this.exit.type = 0;
+					this.exit.frame = 0;
+				}
 			}
 
 			if (dot.visited) {
@@ -67,7 +75,7 @@ export class MainState extends Phaser.State {
 		this.validMoves = [];
 		for (let x = -1; x < 2; x++) {
 			for (let y = -1; y < 2; y++) {
-				if (!(x === 0 && y === 0) && this.map[this.player.y + y][this.player.x + x] !== null) {
+				if (!(x === 0 && y === 0) && this.map[this.player.y + y][this.player.x + x] !== null && this.map[this.player.y + y][this.player.x + x].type !== 6) {
 					let valid = true;
 					for (let i = 0; i < this.path.length - 1; i++) {
 						if (this.path[i].x   === this.player.x     && this.path[i].y   === this.player.y &&
