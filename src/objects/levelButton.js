@@ -13,17 +13,19 @@ export class LevelButton extends Phaser.Button {
 
         this.anchor.set(0.5, 0.5);
         this.level = level;
-        
+    }
+
+    enable() {
         this.popup = game.add.group();
-        this.popup.x = x;
-        this.popup.y = y;
+        this.popup.x = this.x;
+        this.popup.y = this.y;
         this.popup.scale.tween = game.add.tween(this.popup.scale);
 
         let bubble = game.add.image(0, 0, 'level-popup');
         bubble.anchor.set(0.5, 1.5);
         this.popup.add(bubble);
 
-        let text = game.add.bitmapText(0, 0, 'handwritten', 'Level ' + level.id + '\n' + level.name, 32);
+        let text = game.add.bitmapText(0, 0, 'handwritten', this.level.id + '\n' + this.level.name, 32);
         text.anchor.set(0.5, 1.5);
         this.popup.add(text);
 
