@@ -15,6 +15,7 @@ class MapTile extends Phaser.Sprite {
 export function buildLevelMap(source) {
     let layout = source.layout
     let map = [];
+    map.remaining = 0;
     for (let y = 0; y < layout.length; y++) {
         let row = [];
         for (let x = 0; x < layout[y].length; x++) {
@@ -25,11 +26,13 @@ export function buildLevelMap(source) {
                 map.startX = x;
                 map.startY = y;
             } else if (layout[y][x] === 'X') {
-                row.push(new MapTile(40*x, 40*y, 0));
+                row.push(new MapTile(40*x, 40*y, 6));
                 map.endX = x;
                 map.endY = y;
             } else {
-                row.push(new MapTile(40*x, 40*y, Number.parseInt(layout[y][x])));
+                let type = Number.parseInt(layout[y][x]);
+                row.push(new MapTile(40*x, 40*y, type));
+                map.remaining += type;
             }
         }
         map.push(row);
