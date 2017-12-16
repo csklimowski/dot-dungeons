@@ -14,6 +14,11 @@ export class MainState extends Phaser.State {
 
 		this.map = buildLevelMap(game.currentLevel);
 
+		game.add.button(300, 0, 'ui', this.undo, this, 3, 2);
+		game.add.button(332, 0, 'ui', function() {
+			game.state.start('level-select');
+		}, this, 1, 0);
+
 		this.player = {
 			x: this.map.startX,
 			y: this.map.startY,
@@ -24,7 +29,9 @@ export class MainState extends Phaser.State {
 
 		this.path = [{
 			x: this.map.startX,
-			y: this.map.startY
+			y: this.map.startY,
+			cleared: false,
+			visited: true
 		}];
 
 		this.exit = this.map[this.map.endY][this.map.endX];
@@ -33,6 +40,8 @@ export class MainState extends Phaser.State {
 		this.calculateValidMoves();
 
 		game.input.onDown.add(function() {
+			if (game.input.y < 32) return;
+
 			this.player.x = this.player.nextX;
 			this.player.y = this.player.nextY;
 
@@ -42,14 +51,23 @@ export class MainState extends Phaser.State {
 			}
 
 			let dot = this.map[this.player.y][this.player.x];
+			let summary = {
+				x: this.player.x,
+				y: this.player.y,
+				cleared: false,
+				visited: false,
+				finished: false,
+			};
 
-			if (this.player.charge === dot.type) {
+			if (this.player.charge > 0 && this.player.charge === dot.type) {
 				this.map.remaining -= dot.type;
 				dot.type = 0;
 				dot.frame = 0;
-				if (this.map.remaining === 0) {
+				summary.cleared = true;
+				if (this.map.remaining <= 0) {
 					this.exit.type = 0;
 					this.exit.frame = 0;
+					summary.finished = true;
 				}
 			}
 
@@ -57,14 +75,13 @@ export class MainState extends Phaser.State {
 				this.player.charge++;
 			} else {
 				dot.visited = true;
+				summary.visited = true;
 				this.player.charge = 0;
 			}
 			this.chargeText.text = this.player.charge;
 
-			this.path.push({
-				x: this.player.x,
-				y: this.player.y
-			});
+			summary.charge = this.player.charge;
+			this.path.push(summary);
 			
 			this.calculateValidMoves();
 			if (this.validMoves.length === 0) game.state.restart();
@@ -110,7 +127,7 @@ export class MainState extends Phaser.State {
 				leastDistance = newDistance;
 			}
 		}
-		
+		``
 		//this.graphics.lineStyle(3, 0x88ccff);
 		this.graphics.lineStyle(4, 0x444444);
 		this.graphics.moveTo(this.displayX(this.path[0].x), this.displayY(this.path[0].y));
@@ -127,5 +144,28 @@ export class MainState extends Phaser.State {
 	}
 	
 	displayX(x) { return 40*x; }
-	displayY(y) { return 40*y; }
+	displayY(y) { return 50 + 40*y; }
+
+	undo() {
+		if (this.path.length <= 0) return;
+		let last = this.path.pop();
+		this.player.x = this.path[this.path.length - 1].x;
+		this.player.y = this.path[this.path.length - 1].y;
+		this.player.charge = this.path[this.path.length - 1].charge;
+		this.chargeText.text = this.player.charge;
+
+		if (last.cleared) {
+			this.map[last.y][last.x].type = this.map[last.y][last.x].initialType;
+			this.map[last.y][last.x].frame = this.map[last.y][last.x].type;
+			this.map.remaining++;
+		}
+		if (last.visited) {
+			this.map[last.y][last.x].visited = false;
+		}
+		if (last.finished) {
+			this.exit.frame = 6;
+			this.exit.type = 6;
+		}
+		this.calculateValidMoves();
+	}
 }

@@ -9,6 +9,7 @@ class MapTile extends Phaser.Sprite {
         this.type = type;
         this.frame = type;
         this.visited = false;
+        this.initialType = type;
     }
 }
 
@@ -22,16 +23,16 @@ export function buildLevelMap(source) {
             if (layout[y][x] === ' ') {
                 row.push(null);
             } else if (layout[y][x] === 'N') {
-                row.push(new MapTile(40*x, 40*y, 0));
+                row.push(new MapTile(40*x, 50+ 40*y, 0));
                 map.startX = x;
                 map.startY = y;
             } else if (layout[y][x] === 'X') {
-                row.push(new MapTile(40*x, 40*y, 6));
+                row.push(new MapTile(40*x, 50 + 40*y, 6));
                 map.endX = x;
                 map.endY = y;
             } else {
                 let type = Number.parseInt(layout[y][x]);
-                row.push(new MapTile(40*x, 40*y, type));
+                row.push(new MapTile(40*x, 50 + 40*y, type));
                 map.remaining += type;
             }
         }
