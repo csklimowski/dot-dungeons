@@ -139,6 +139,32 @@ export const world1 = [
     },
     {
         id: 'Level 7',
+        name: 'Diamond',
+        layout: [
+            '       ',
+            '   2   ',
+            '  010  ',
+            ' N000X ',
+            '  010  ',
+            '   2   ',
+            '       '
+        ]
+    },
+    {
+        id: 'Challenge 7',
+        name: 'I Hate Naming Levels',
+        layout: [
+            '       ',
+            '   2   ',
+            '  010  ',
+            ' N121X ',
+            '  010  ',
+            '   2   ',
+            '       '
+        ]
+    },
+    {
+        id: 'Level 8',
         name: 'Two By Two',
         layout: [
             '        ',
@@ -149,7 +175,7 @@ export const world1 = [
         ]
     },
     {
-        id: 'Challenge 7',
+        id: 'Challenge 8',
         name: 'One Problem',
         layout: [
             '        ',
