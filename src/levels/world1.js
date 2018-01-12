@@ -139,6 +139,56 @@ export const world1 = [
     },
     {
         id: 'Level 7',
+        name: 'The Count',
+        layout: [
+            '      ',
+            '  00X ',
+            '  20  ',
+            '  00  ',
+            '  01  ',
+            ' N00  ',
+            '      '
+        ]
+    },
+    {
+        id: 'Challenge 7',
+        name: 'The Climb',
+        layout: [
+            '      ',
+            '  00X ',
+            '  20  ',
+            '  21  ',
+            '  01  ',
+            ' N00  ',
+            '      '
+        ]
+    },
+    {
+        id: 'Level 8',
+        name: 'An Unfortunate Hole',
+        layout: [
+            '       ',
+            '  N X  ',
+            ' 00000 ',
+            ' 00 00 ',
+            ' 02020 ',
+            '       '
+        ]
+    },
+    {
+        id: 'Challenge 8',
+        name: 'A Saddening Gap',
+        layout: [
+            '       ',
+            '  N X  ',
+            ' 02020 ',
+            ' 00 00 ',
+            ' 02020 ',
+            '       '
+        ]
+    },
+    {
+        id: 'Level 9',
         name: 'Diamond',
         layout: [
             '       ',
@@ -151,7 +201,7 @@ export const world1 = [
         ]
     },
     {
-        id: 'Challenge 7',
+        id: 'Challenge 9',
         name: 'I Hate Naming Levels',
         layout: [
             '       ',
@@ -164,7 +214,7 @@ export const world1 = [
         ]
     },
     {
-        id: 'Level 8',
+        id: 'Level 10',
         name: 'Two By Two',
         layout: [
             '        ',
@@ -175,7 +225,7 @@ export const world1 = [
         ]
     },
     {
-        id: 'Challenge 8',
+        id: 'Challenge 10',
         name: 'One Problem',
         layout: [
             '        ',
@@ -183,6 +233,32 @@ export const world1 = [
             ' N0110X ',
             '  0220  ',
             '        '
+        ]
+    },
+    {
+        id: 'Level 11',
+        name: 'fjfk',
+        layout: [
+            '      ',
+            ' N03X ',
+            '  20  ',
+            '  01  ',
+            '  00  ',
+            '  00  ',
+            '      ',
+        ]
+    },
+    {
+        id: 'Challenge 11',
+        name: 'sofsjdhf',
+        layout: [
+            '      ',
+            ' N30X ',
+            '  02  ',
+            '  11  ',
+            '  20  ',
+            '  03  ',
+            '      ',
         ]
     }
 ];
