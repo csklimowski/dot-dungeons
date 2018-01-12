@@ -4,7 +4,7 @@ import { buildLevelMap } from '../util/map';
 export class MainState extends Phaser.State {
 	create() {
 
-		game.stage.backgroundColor = 0xffffff;
+		game.stage.backgroundColor = 0xdddddd;
 
 		this.graphics = game.add.graphics(0, 0);
 		this.chargeText = game.add.text(0, 0, '0', {

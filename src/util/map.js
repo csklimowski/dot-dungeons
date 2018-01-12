@@ -41,80 +41,99 @@ export function buildLevelMap(source) {
     return map;
 }
 
-export function buildProceduralMap(map) {
-    let currentX = 7, currentY = 5, nextX = 7, nextY = 5, squares = 50;
+export function buildProceduralMap() {
+    let source = [
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    ];
+    let currentX = 1, currentY = 3, nextX = 1, nextY = 3, squares = 30;
+    source[currentY][currentX] = 'N';
     while (squares > 0) {
-        let direction = Math.floor(Math.random() * 4);
-        while (map[nextY][nextX].type !== 0) {
-            if (direction === 0 && nextX < map[nextY].length - 2) {
+        let direction = Math.floor(Math.random() * 5);
+        while (source[nextY][nextX] !== ' ') {
+            if (direction <= 1 && nextX < source[nextY].length - 2) {
                 nextX++;
-            } else if (direction === 1 && nextY < map.length - 2) {
+            } else if (direction === 2 && nextY < source.length - 2) {
                 nextY++;
-            } else if (direction === 2 && nextX > 2) {
+            } else if (direction === 3 && nextX > 1) {
                 nextX--;
-            } else if (direction === 3 && nextY > 2) {
+            } else if (direction === 4 && nextY > 1) {
                 nextY--;
             } else {
                 break;
             }
         }
-        map[nextY][nextX].type = 1;
+        if (source[nextY][nextX] === ' ') {
+            source[nextY][nextX] = '0';
+            squares--;
+        }
         currentX = nextX;
         currentY = nextY;
-        squares--;
     }
+    source[currentY][currentX] = 'X';
     
-    for (let y = 1; y < map.length - 1; y++) {
-        for (let x = 1; x < map[y].length - 1; x++) {
-            if (map[y][x].type === 1 && Math.random() > 0.5) {
+    for (let y = 1; y < source.length - 1; y++) {
+        for (let x = 1; x < source[y].length - 1; x++) {
+            if (source[y][x] === '0' && Math.random() > 0.5) {
                 let adjacent = 0;
                 for (let y2 = -1; y2 < 2; y2++) {
                     for (let x2 = -1; x2 < 2; x2++) {
-                        if (map[y+y2][x+x2].type === 1) {
+                        if (source[y+y2][x+x2] === '0') {
                             adjacent++;
                         }
                     }
                 }
                 if (adjacent > 7) {
-                    map[y][x].type = 4;
+                    source[y][x] = '3';
                 } else if (adjacent > 6) {
-                    map[y][x].type = 3;
+                    source[y][x] = '2';
                 } else if (adjacent > 5) {
-                    map[y][x].type = 2;
+                    source[y][x] = '1';
                 }
             }
         }
     }
     
-    for (let y = 1; y < map.length - 1; y++) {
-        for (let x = 1; x < map[y].length - 1; x++) {
+    for (let y = 1; y < source.length - 1; y++) {
+        for (let x = 1; x < source[y].length - 1; x++) {
             let adjacent = 0;
             for (let y2 = -1; y2 < 2; y2++) {
                 for (let x2 = -1; x2 < 2; x2++) {
-                    if (map[y+y2][x+x2].type !== 0) {
+                    if (source[y+y2][x+x2] !== ' ') {
                         adjacent++;
                     }
                 }
             }
             if (adjacent < 3 && currentX !== x && currentY !== y) {
-                map[y][x].type = 0;
+                source[y][x] = ' ';
             }
         }
     }
     
-    for (let y = map.length - 2; y > 0; y--) {
-        for (let x = map[y].length - 2; x > 0; x--) {
+    for (let y = source.length - 2; y > 0; y--) {
+        for (let x = source[y].length - 2; x > 0; x--) {
             let adjacent = 0;
             for (let y2 = -1; y2 < 2; y2++) {
                 for (let x2 = -1; x2 < 2; x2++) {
-                    if (map[y+y2][x+x2].type !== 0) {
+                    if (source[y+y2][x+x2] !== ' ') {
                         adjacent++;
                     }
                 }
             }
             if (adjacent < 3 && currentX !== x && currentY !== y) {
-                map[y][x].type = 0;
+                source[y][x] = ' ';
             }
         }
+    }
+
+    return {
+        id: 'Procedural Level',
+        name: 'Different Every Time!',
+        layout: source
     }
 }
