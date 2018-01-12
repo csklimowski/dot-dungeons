@@ -42,95 +42,66 @@ export function buildLevelMap(source) {
 }
 
 export function buildProceduralMap() {
-    let source = [
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-    ];
-    let currentX = 1, currentY = 3, nextX = 1, nextY = 3, squares = 30;
-    source[currentY][currentX] = 'N';
-    while (squares > 0) {
-        let direction = Math.floor(Math.random() * 5);
-        while (source[nextY][nextX] !== ' ') {
-            if (direction <= 1 && nextX < source[nextY].length - 2) {
-                nextX++;
-            } else if (direction === 2 && nextY < source.length - 2) {
-                nextY++;
-            } else if (direction === 3 && nextX > 1) {
-                nextX--;
-            } else if (direction === 4 && nextY > 1) {
-                nextY--;
-            } else {
+    let source;
+    let error = false;
+    do {
+        source = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ];
+        let currentX = 1, currentY = 3, path = [], squares = 20, charge = 0;
+        source[currentY][currentX] = 'N';
+    
+        while (true) {
+            path.push({x: currentX, y: currentY});
+            let validMoves = [];
+            for (let x = -1; x < 2; x++) {
+                for (let y = -1; y < 2; y++) {
+                    if (!(x === 0 && y === 0) && currentX + x > 0 && currentY + y > 0 && currentX + x < 13 && currentY + y < 6) {
+                        let valid = true;
+                        for (let i = 0; i < path.length - 1; i++) {
+                            if (path[i].x   === currentX     && path[i].y   === currentY &&
+                                path[i+1].x === currentX + x && path[i+1].y === currentY + y) {
+                                valid = false;
+                                break;
+                            }
+                            if (path[i].x   === currentX + x && path[i].y   === currentY + y &&
+                                path[i+1].x === currentX     && path[i+1].y === currentY) {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if (valid) validMoves.push({x, y});
+                    }
+                }
+            }
+            if (validMoves.length === 0) {
+                error = true;
                 break;
             }
-        }
-        if (source[nextY][nextX] === ' ') {
-            source[nextY][nextX] = '0';
+            let nextMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+            currentX += nextMove.x;
+            currentY += nextMove.y;
+    
+            if (source[currentY][currentX] === ' ') {
+                if (squares < 0) {
+                    source[currentY][currentX] = 'X';
+                    break;
+                }
+                source[currentY][currentX] = '' + charge;
+                charge = 0;
+            } else {
+                charge++;
+            }
             squares--;
         }
-        currentX = nextX;
-        currentY = nextY;
-    }
-    source[currentY][currentX] = 'X';
+    } while (error);
     
-    for (let y = 1; y < source.length - 1; y++) {
-        for (let x = 1; x < source[y].length - 1; x++) {
-            if (source[y][x] === '0' && Math.random() > 0.5) {
-                let adjacent = 0;
-                for (let y2 = -1; y2 < 2; y2++) {
-                    for (let x2 = -1; x2 < 2; x2++) {
-                        if (source[y+y2][x+x2] === '0') {
-                            adjacent++;
-                        }
-                    }
-                }
-                if (adjacent > 7) {
-                    source[y][x] = '3';
-                } else if (adjacent > 6) {
-                    source[y][x] = '2';
-                } else if (adjacent > 5) {
-                    source[y][x] = '1';
-                }
-            }
-        }
-    }
-    
-    for (let y = 1; y < source.length - 1; y++) {
-        for (let x = 1; x < source[y].length - 1; x++) {
-            let adjacent = 0;
-            for (let y2 = -1; y2 < 2; y2++) {
-                for (let x2 = -1; x2 < 2; x2++) {
-                    if (source[y+y2][x+x2] !== ' ') {
-                        adjacent++;
-                    }
-                }
-            }
-            if (adjacent < 3 && currentX !== x && currentY !== y) {
-                source[y][x] = ' ';
-            }
-        }
-    }
-    
-    for (let y = source.length - 2; y > 0; y--) {
-        for (let x = source[y].length - 2; x > 0; x--) {
-            let adjacent = 0;
-            for (let y2 = -1; y2 < 2; y2++) {
-                for (let x2 = -1; x2 < 2; x2++) {
-                    if (source[y+y2][x+x2] !== ' ') {
-                        adjacent++;
-                    }
-                }
-            }
-            if (adjacent < 3 && currentX !== x && currentY !== y) {
-                source[y][x] = ' ';
-            }
-        }
-    }
-
     return {
         id: 'Procedural Level',
         name: 'Different Every Time!',
