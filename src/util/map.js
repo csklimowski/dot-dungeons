@@ -1,39 +1,38 @@
 import game from '../game';
 
-class MapTile extends Phaser.Sprite {
-    constructor(x, y, type) {
-        super(game, x, y, 'map-tile');
-        game.add.existing(this);
+import { Dot } from '../objects/dot';
 
-        this.anchor.set(0.5);
-        this.type = type;
-        this.frame = type;
-        this.visited = false;
-        this.initialType = type;
-    }
-}
+export function realX(x) { return 250 + 90*x; }
+export function realY(y) { return 90 + 90*y; }
 
 export function buildLevelMap(source) {
-    let layout = source.layout;
     let map = [];
     map.remaining = 0;
+
+    let layout = source.layout;
     for (let y = 0; y < layout.length; y++) {
         let row = [];
         for (let x = 0; x < layout[y].length; x++) {
-            if (layout[y][x] === ' ') {
+            let type = layout[y][x];
+
+            if (type === ' ') {
                 row.push(null);
-            } else if (layout[y][x] === 'N') {
-                row.push(new MapTile(40*x, 50+ 40*y, 0));
+            } else  {
+                let dot = new Dot(realX(x), realY(y), type)
+                if (dot.hasNumber) {
+                    map.remaining += dot.number.value;
+                }
+                row.push(dot);
+            }
+
+            if (type === 'N') {
                 map.startX = x;
                 map.startY = y;
-            } else if (layout[y][x] === 'X') {
-                row.push(new MapTile(40*x, 50 + 40*y, 6));
+            }
+
+            if (type === 'X') {
                 map.endX = x;
                 map.endY = y;
-            } else {
-                let type = Number.parseInt(layout[y][x]);
-                row.push(new MapTile(40*x, 50 + 40*y, type));
-                map.remaining += type;
             }
         }
         map.push(row);
@@ -46,13 +45,13 @@ export function buildProceduralMap() {
     let error = false;
     do {
         source = [
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ']
         ];
         let currentX = 1, currentY = 3, path = [], squares = 20, charge = 0;
         source[currentY][currentX] = 'N';
@@ -62,7 +61,7 @@ export function buildProceduralMap() {
             let validMoves = [];
             for (let x = -1; x < 2; x++) {
                 for (let y = -1; y < 2; y++) {
-                    if (!(x === 0 && y === 0) && currentX + x > 0 && currentY + y > 0 && currentX + x < 13 && currentY + y < 6) {
+                    if (!(x === 0 && y === 0) && currentX + x > 0 && currentY + y > 0 && currentX + x < 6 && currentY + y < 6) {
                         let valid = true;
                         for (let i = 0; i < path.length - 1; i++) {
                             if (path[i].x   === currentX     && path[i].y   === currentY &&

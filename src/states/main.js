@@ -1,107 +1,121 @@
 import game from '../game';
-import { buildLevelMap } from '../util/map';
+import { buildLevelMap, realX, realY } from '../util/map';
+import { Pencil } from '../objects/pencil';
 
 export class MainState extends Phaser.State {
 	create() {
-
-		game.stage.backgroundColor = 0xdddddd;
-
 		this.graphics = game.add.graphics(0, 0);
 		this.chargeText = game.add.text(0, 0, '0', {
 			font: '20px sans-serif',
 			fill: '#000000'
 		});
-
-		this.map = buildLevelMap(game.currentLevel);
-
-		game.add.button(300, 0, 'ui', this.undo, this, 3, 2);
+		
+		let map = buildLevelMap(game.currentLevel);
+		this.pencil = new Pencil(map.startX, map.startY);
+		
+		game.add.image(0, 0, 'paper-texture');
+		
 		game.add.button(332, 0, 'ui', function() {
 			game.state.start('level-select');
 		}, this, 1, 0);
-
-		this.player = {
-			x: this.map.startX,
-			y: this.map.startY,
-			nextX: this.map.startX,
-			nextY: this.map.startY,
-			charge: 0
-		};
-
+		
+		
 		this.path = [{
-			x: this.map.startX,
-			y: this.map.startY,
-			cleared: false,
-			visited: true
+			x: map.startX,
+			y: map.startY,
+			// cleared: false,
+			// visited: true,
+			// finished: false
 		}];
-
-		this.exit = this.map[this.map.endY][this.map.endX];
-		this.map[this.map.startY][this.map.startX].visited = true;
+		
+		this.exit = map[map.endY][map.endX];
+		map[map.startY][map.startX].markVisited();
+		this.map = map;
 		
 		this.calculateValidMoves();
 
-		game.input.onDown.add(function() {
-			if (game.input.y < 32) return;
+		game.input.onDown.add(this.movePencil, this);
+	}
 
-			this.player.x = this.player.nextX;
-			this.player.y = this.player.nextY;
+	movePencil() {
+		if (game.input.y < 32) return;
 
-			if (this.player.x === this.map.endX && this.player.y === this.map.endY) {
-				game.state.start('level-select');
-				return;
-			}
+		let pencil = this.pencil;
+		let map = this.map;
 
-			let dot = this.map[this.player.y][this.player.x];
-			let summary = {
-				x: this.player.x,
-				y: this.player.y,
-				cleared: false,
-				visited: false,
-				finished: false,
-			};
+		// move pencil
+		pencil.pos.x = pencil.next.x;
+		pencil.pos.y = pencil.next.y;
+		pencil.x = realX(pencil.pos.x);
+		pencil.y = realY(pencil.pos.y);
 
-			if (this.player.charge > 0 && this.player.charge === dot.type) {
-				this.map.remaining -= dot.type;
-				dot.type = 0;
-				dot.frame = 0;
+		if (pencil.pos.x === map.endX && pencil.pos.y === map.endY) {
+			game.state.start('level-select');
+			return;
+		}
+
+		// inspect dot
+		let dot = map[pencil.pos.y][pencil.pos.x];
+		let summary = {
+			x: pencil.pos.x,
+			y: pencil.pos.y,
+			cleared: false,
+			visited: false,
+			finished: false,
+		};
+
+		// defeat number
+		if (dot.hasNumber) {
+			if (pencil.charge === dot.number.value) {
+				map.remaining -= dot.number.value;
+				dot.defeatNumber();
 				summary.cleared = true;
-				if (this.map.remaining <= 0) {
-					this.exit.type = 0;
-					this.exit.frame = 0;
+				if (map.remaining <= 0) {
+					this.exit.unlock();
 					summary.finished = true;
 				}
 			}
+		}
 
-			if (dot.visited) {
-				this.player.charge++;
-			} else {
-				dot.visited = true;
-				summary.visited = true;
-				this.player.charge = 0;
-			}
-			this.chargeText.text = this.player.charge;
+		// mark as visited
+		if (dot.visited) {
+			pencil.charge++;
+		} else {
+			dot.markVisited();
+			pencil.charge = 0;
+			summary.visited = true;
+		}
+		
+		// update charge
+		this.chargeText.text = pencil.charge;
+		summary.charge = pencil.charge;
 
-			summary.charge = this.player.charge;
-			this.path.push(summary);
-			
-			this.calculateValidMoves();
-			if (this.validMoves.length === 0) game.state.restart();
-		}, this);
+		this.path.push(summary);
+		this.calculateValidMoves();
 	}
 
 	calculateValidMoves() {
+		let pencil = this.pencil;
+		let path = this.path;
 		this.validMoves = [];
 		for (let x = -1; x < 2; x++) {
 			for (let y = -1; y < 2; y++) {
-				if (!(x === 0 && y === 0) && this.map[this.player.y + y][this.player.x + x] !== null && this.map[this.player.y + y][this.player.x + x].type !== 6) {
+				if (!(x === 0 && y === 0) && 
+					 this.map[pencil.pos.y+y][pencil.pos.x+x] !== null && 
+					!this.map[pencil.pos.y+y][pencil.pos.x+x].locked) {
 					let valid = true;
 					for (let i = 0; i < this.path.length - 1; i++) {
-						if (this.path[i].x   === this.player.x     && this.path[i].y   === this.player.y &&
-							this.path[i+1].x === this.player.x + x && this.path[i+1].y === this.player.y + y) {
+						if (path[i].x   === pencil.pos.x && 
+							path[i].y   === pencil.pos.y &&
+							path[i+1].x === pencil.pos.x + x &&
+							path[i+1].y === pencil.pos.y + y) {
 							valid = false;
 							break;
 						}
-						if (this.path[i].x   === this.player.x + x && this.path[i].y   === this.player.y + y &&
-							this.path[i+1].x === this.player.x     && this.path[i+1].y === this.player.y) {
+						if (path[i].x   === pencil.pos.x + x && 
+							path[i].y   === pencil.pos.y + y &&
+							path[i+1].x === pencil.pos.x     && 
+							path[i+1].y === pencil.pos.y) {
 							valid = false;
 							break;
 						}
@@ -113,53 +127,54 @@ export class MainState extends Phaser.State {
 	}
 	
 	update() {
-		this.graphics.clear();
+		let pencil = this.pencil;
 		
 		let leastDistance = Number.POSITIVE_INFINITY;
 		for (let move of this.validMoves) {
 			let newDistance = Phaser.Math.distance(
 				game.input.x, game.input.y,
-				this.displayX(this.player.x + move.x), this.displayY(this.player.y + move.y)
+				realX(pencil.pos.x + move.x), 
+				realY(pencil.pos.y + move.y)
 			);
 			if (newDistance < leastDistance) {
-				this.player.nextX = this.player.x + move.x;
-				this.player.nextY = this.player.y + move.y;
+				pencil.next.x = pencil.pos.x + move.x;
+				pencil.next.y = pencil.pos.y + move.y;
 				leastDistance = newDistance;
 			}
 		}
 		
-		this.graphics.lineStyle(4, 0x444444);
-		this.graphics.moveTo(this.displayX(this.path[0].x), this.displayY(this.path[0].y));
-		for (let i = 1; i < this.path.length; i++) {
-			this.graphics.lineTo(this.displayX(this.path[i].x), this.displayY(this.path[i].y));
+		let g = this.graphics;
+		let path = this.path;
+		g.clear();
+		g.lineStyle(8, 0x444444);
+		g.moveTo(realX(path[0].x), realY(path[0].y));
+		for (let i = 1; i < path.length; i++) {
+			g.lineTo(realX(path[i].x), realY(path[i].y));
 		}
-		this.graphics.lineStyle(4, 0x444444, 0.15);
-		this.graphics.lineTo(this.displayX(this.player.nextX), this.displayY(this.player.nextY));
+		g.lineStyle(8, 0x444444, 0.15);
+		g.lineTo(realX(pencil.next.x), realY(pencil.next.y));
 	}
-	
-	displayX(x) { return 40*x; }
-	displayY(y) { return 50 + 40*y; }
 
-	undo() {
-		if (this.path.length <= 1) return;
-		let last = this.path.pop();
-		this.player.x = this.path[this.path.length - 1].x;
-		this.player.y = this.path[this.path.length - 1].y;
-		this.player.charge = this.path[this.path.length - 1].charge;
-		this.chargeText.text = this.player.charge;
+	// undo() {
+	// 	if (this.path.length <= 1) return;
+	// 	let last = this.path.pop();
+	// 	this.player.x = this.path[this.path.length - 1].x;
+	// 	this.player.y = this.path[this.path.length - 1].y;
+	// 	this.player.charge = this.path[this.path.length - 1].charge;
+	// 	this.chargeText.text = this.player.charge;
 
-		if (last.cleared) {
-			this.map[last.y][last.x].type = this.map[last.y][last.x].initialType;
-			this.map[last.y][last.x].frame = this.map[last.y][last.x].type;
-			this.map.remaining++;
-		}
-		if (last.visited) {
-			this.map[last.y][last.x].visited = false;
-		}
-		if (last.finished) {
-			this.exit.frame = 6;
-			this.exit.type = 6;
-		}
-		this.calculateValidMoves();
-	}
+	// 	if (last.cleared) {
+	// 		this.map[last.y][last.x].type = this.map[last.y][last.x].initialType;
+	// 		this.map[last.y][last.x].frame = this.map[last.y][last.x].type;
+	// 		this.map.remaining++;
+	// 	}
+	// 	if (last.visited) {
+	// 		this.map[last.y][last.x].visited = false;
+	// 	}
+	// 	if (last.finished) {
+	// 		this.exit.frame = 6;
+	// 		this.exit.type = 6;
+	// 	}
+	// 	this.calculateValidMoves();
+	// }
 }
