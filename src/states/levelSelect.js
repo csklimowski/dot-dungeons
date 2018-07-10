@@ -11,8 +11,6 @@ export class LevelSelectState extends Phaser.State {
 			buttons.push(new LevelButton(150 + 50*Math.floor(i / 2), 200 + 50*(i % 2), world1[i]));
 		}
 
-		buttons.push(new LevelButton(100, 100, buildProceduralMap()));
-
 		for (let button of buttons) {
 			button.enable();
 		}
