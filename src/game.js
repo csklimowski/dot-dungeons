@@ -2,7 +2,7 @@ import { LoadState } from './states/load';
 import { LevelSelectState } from './states/levelSelect';
 import { MainState } from './states/main';
 
-var game = new Phaser.Game(640, 360, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game');
 
 game.state.add('load', LoadState);
 game.state.add('level-select', LevelSelectState);
