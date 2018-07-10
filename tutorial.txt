@@ -1,10 +1,14 @@
 DOT DUNGEONS is a puzzle game. In each level, the object is to defeat all of the monsters, then get to the exit.
 
 You always start in the entrance dot. You can move to an adjacent dot (including diagonally) by drawing a line from your current position to it.
-Your path through the level should be a single continuous path through adjacent dots; act as if you may never lift your pencil.
+Your path through the level should be a single continuous path through adjacent dots. In other words, act as if you may never lift your pencil.
 
 You may revisit dots that your path has already crossed, but you may NEVER retrace a path between two adjacent dots that you have already taken.
 
-Your charge starts at 0. Revisiting a dot increases it by 1, and visiting any dot for the first time resets it to 0. So, the only way to increase your charge beyond 1 is by visiting multiple already-visited dots in a row.
+Your charge starts at 0. Revisiting a dot you've previously been in increases it by 1, and visiting any dot for the first time resets it to 0. So, the only way to increase your charge beyond 1 is by moving to multiple already-visited dots in a row.
 
-Monsters are numbers; their value represents the charge needed to defeat them. When you visit a dot, if your charge (before updating it based on your current position) is exactly equal to the monster's value, the monster is defeated. You may visit a monster's dot without defeating it, and return later to defeat it. Mark defeated monsters by circling them.
+Monsters are numbers; their value is the charge needed to defeat them. When you visit a dot, if your charge is exactly equal to the monster's value, the monster is defeated. This is done BEFORE changing your charge based on the dot you just moved to!
+
+You may visit a monster's dot without defeating it, and return later to defeat it. Mark defeated monsters by circling them.
+
+Once you have defeated all of the monsters in the level, you must move to the exit to complete the level. You cannot move to the exit before defeating every monster in a level!
