@@ -1,44 +1,42 @@
 import game from '../game';
 import { buildLevelMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
+import { ChargeTracker } from '../objects/chargeTracker';
 
 export class MainState extends Phaser.State {
 	create() {
 		this.graphics = game.add.graphics(0, 0);
-		this.chargeText = game.add.text(0, 0, '0', {
-			font: '20px sans-serif',
-			fill: '#000000'
-		});
-		
 		let map = buildLevelMap(game.currentLevel);
+		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY);
-		
 		game.add.image(0, 0, 'paper-texture');
 		
-		game.add.button(332, 0, 'ui', function() {
-			game.state.start('level-select');
+		let back = game.add.button(10, 10, 'ui', function() {
+			game.state.start('menu');
 		}, this, 1, 0);
-		
+		let undo = game.add.button(100, 10, 'ui', this.undo, this, 3, 2);
+		back.scale.set(2);
+		undo.scale.set(2);
 		
 		this.path = [{
 			x: map.startX,
 			y: map.startY,
-			// cleared: false,
-			// visited: true,
-			// finished: false
+			cleared: false,
+			visited: true,
+			finished: false,
+			charge: 0
 		}];
 		
 		this.exit = map[map.endY][map.endX];
 		map[map.startY][map.startX].markVisited();
 		this.map = map;
-		
 		this.calculateValidMoves();
 
 		game.input.onDown.add(this.movePencil, this);
 	}
 
 	movePencil() {
-		if (game.input.y < 32) return;
+		if (game.input.y < 100) return;
 
 		let pencil = this.pencil;
 		let map = this.map;
@@ -50,7 +48,7 @@ export class MainState extends Phaser.State {
 		pencil.y = realY(pencil.pos.y);
 
 		if (pencil.pos.x === map.endX && pencil.pos.y === map.endY) {
-			game.state.start('level-select');
+			game.state.start('menu');
 			return;
 		}
 
@@ -66,8 +64,8 @@ export class MainState extends Phaser.State {
 
 		// defeat number
 		if (dot.hasNumber) {
-			if (pencil.charge === dot.number.value) {
-				map.remaining -= dot.number.value;
+			if (this.ct.charge === dot.number.value) {
+				map.remaining -= 1;
 				dot.defeatNumber();
 				summary.cleared = true;
 				if (map.remaining <= 0) {
@@ -79,17 +77,15 @@ export class MainState extends Phaser.State {
 
 		// mark as visited
 		if (dot.visited) {
-			pencil.charge++;
+			this.ct.gainCharge();
 		} else {
+			this.ct.loseCharge();
 			dot.markVisited();
-			pencil.charge = 0;
 			summary.visited = true;
 		}
 		
-		// update charge
-		this.chargeText.text = pencil.charge;
-		summary.charge = pencil.charge;
-
+		// update charge;
+		summary.charge = this.ct.charge;
 		this.path.push(summary);
 		this.calculateValidMoves();
 	}
@@ -155,26 +151,30 @@ export class MainState extends Phaser.State {
 		g.lineTo(realX(pencil.next.x), realY(pencil.next.y));
 	}
 
-	// undo() {
-	// 	if (this.path.length <= 1) return;
-	// 	let last = this.path.pop();
-	// 	this.player.x = this.path[this.path.length - 1].x;
-	// 	this.player.y = this.path[this.path.length - 1].y;
-	// 	this.player.charge = this.path[this.path.length - 1].charge;
-	// 	this.chargeText.text = this.player.charge;
+	undo() {
+		if (this.path.length <= 1) return;
 
-	// 	if (last.cleared) {
-	// 		this.map[last.y][last.x].type = this.map[last.y][last.x].initialType;
-	// 		this.map[last.y][last.x].frame = this.map[last.y][last.x].type;
-	// 		this.map.remaining++;
-	// 	}
-	// 	if (last.visited) {
-	// 		this.map[last.y][last.x].visited = false;
-	// 	}
-	// 	if (last.finished) {
-	// 		this.exit.frame = 6;
-	// 		this.exit.type = 6;
-	// 	}
-	// 	this.calculateValidMoves();
-	// }
+		let ult = this.path.pop();
+		let pen = this.path[this.path.length-1];
+		
+		let p = this.pencil;
+		p.pos.x = pen.x;
+		p.pos.y = pen.y;
+		p.x = realX(pen.x);
+		p.y = realY(pen.y);
+
+		this.ct.setCharge(pen.charge);
+		
+		if (ult.cleared) {
+			this.map[ult.y][ult.x].reviveNumber();
+			this.map.remaining++;
+		}
+		if (ult.visited) {
+			this.map[ult.y][ult.x].unmarkVisited();
+		}
+		if (ult.finished) {
+			this.exit.lock();
+		}
+		this.calculateValidMoves();
+	}
 }
