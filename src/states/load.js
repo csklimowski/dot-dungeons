@@ -17,12 +17,16 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('number', 'img/number.png', 40, 40);
 		game.load.spritesheet('door', 'img/door.png', 110, 110);
 		game.load.spritesheet('ui', 'img/ui.png', 32, 32);
+		game.load.spritesheet('charge', 'img/charge.png', 60, 60);
+		game.load.spritesheet('starburst', 'img/starburst.png', 130, 130);
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('level-popup', 'img/level-popup.png');
 		game.load.image('pencil', 'img/pencil.png');
+		game.load.image('puzzles', 'img/menu/puzzles.png');
+		game.load.image('arrow', 'img/menu/arrow.png');
 	}
 
 	create() {
-		game.state.start('level-select');
+		game.state.start('menu');
 	}
 }
