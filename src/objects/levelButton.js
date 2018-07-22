@@ -1,28 +1,22 @@
 import game from '../game';
 
 export class LevelButton extends Phaser.Button {
-
-	constructor(x, y, level) {
-		super(game, x, y, 'level-button');
+	constructor(level) {
+		super(game, level.x, level.y, 'level-button', null, null, 1, 0, 1, 0);
 		game.add.existing(this);
 
 		this.onInputDown.add(function() {
 			game.currentLevel = this.level;
 			game.state.start('main');
+			//console.log(this.level);
 		}, this);
 
-		this.anchor.set(0.5, 0.5);
+		// this.input.enableDrag();
+
+		this.setFrames(1, 0, 1, 0);
+
 		this.level = level;
-		
-		this.onInputOver.add(function() {
-			this.frame = 1;
-		}, this);
-	
-		this.onInputOut.add(function() {
-			this.frame = 0;
-		}, this);
-	}
-
-	enable() {
+		this.anchor.set(0.5);
+		this.scale.set(2);
 	}
 }
