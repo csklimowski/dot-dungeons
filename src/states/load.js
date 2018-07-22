@@ -1,4 +1,10 @@
 import game from '../game';
+import { world1 } from '../levels/world1';
+import { world1b } from '../levels/world1b';
+import { world2 } from '../levels/world2';
+import { world2b } from '../levels/world2b';
+import { world3 } from '../levels/world3';
+import { world3b } from '../levels/world3b';
 
 export class LoadState extends Phaser.State {
 	preload() {
@@ -8,7 +14,7 @@ export class LoadState extends Phaser.State {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
-		game.load.bitmapFont('handwritten', 'font/font2.png', 'font/font2.fnt');
+		game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
 		game.load.spritesheet('level-button', 'img/level-button.png', 32, 32);
 		game.load.spritesheet('dot', 'img/dot.png', 20, 20);
 		game.load.spritesheet('one', 'img/one.png', 80, 80);
@@ -27,6 +33,22 @@ export class LoadState extends Phaser.State {
 	}
 
 	create() {
+		if (docCookies.hasItem('dot_dungeons_data')) {
+			let dataString = docCookies.getItem('dot_dungeons_data');
+			game.data = JSON.parse(dataString);
+		} else {
+			game.data = { unlocks: ['1-1'] };
+			docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
+		}
+
+		game.levels = [];
+		Object.assign(game.levels, world1, world1b, world2, world2b, world3, world3b);
+
+		for (let levelName in game.levels)
+			game.levels[levelName].unlocked = false;
+		for (let levelName of game.data.unlocks)
+			game.levels[levelName].unlocked = true;
+
 		game.state.start('menu');
 	}
 }
