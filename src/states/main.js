@@ -142,7 +142,7 @@ export class MainState extends Phaser.State {
 		let g = this.graphics;
 		let path = this.path;
 		g.clear();
-		g.lineStyle(8, 0x444444);
+		g.lineStyle(9, 0x444444);
 		g.moveTo(realX(path[0].x), realY(path[0].y));
 		for (let i = 1; i < path.length; i++) {
 			g.lineTo(realX(path[i].x), realY(path[i].y));
