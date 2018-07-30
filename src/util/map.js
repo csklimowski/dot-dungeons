@@ -39,19 +39,24 @@ export function buildLevelMap(source) {
 }
 
 export function buildProceduralMap() {
-	let source;
-	let error = false;
+	let difficulty = 0;
+	let floorWidth = 7 + difficulty;
+	let maxDots = 15 + 3*Math.floor(difficulty/2);
+	let minNumbers = 5 + 2*difficulty;
+	let source, error;
 	do {
+		error = false;
 		source = [
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-			[' ', ' ', ' ', ' ', ' ', ' ', ' ']
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' '),
+			Array(floorWidth).fill(' ')
 		];
-		let currentX = 1, currentY = 3, path = [], squares = 20, charge = 0;
+
+		let currentX = 1, currentY = 3, path = [], dots = 0, charge = 0, total = 0;
 		source[currentY][currentX] = 'N';
 	
 		while (true) {
@@ -59,7 +64,7 @@ export function buildProceduralMap() {
 			let validMoves = [];
 			for (let x = -1; x < 2; x++) {
 				for (let y = -1; y < 2; y++) {
-					if (!(x === 0 && y === 0) && currentX + x > 0 && currentY + y > 0 && currentX + x < 6 && currentY + y < 6) {
+					if (!(x === 0 && y === 0) && currentX + x > 0 && currentY + y > 0 && currentX + x < floorWidth-1 && currentY + y < 6) {
 						let valid = true;
 						for (let i = 0; i < path.length - 1; i++) {
 							if (path[i].x   === currentX     && path[i].y   === currentY &&
@@ -86,22 +91,29 @@ export function buildProceduralMap() {
 			currentY += nextMove.y;
 	
 			if (source[currentY][currentX] === ' ') {
-				if (squares < 0) {
+				if (total >= minNumbers) {
 					source[currentY][currentX] = 'X';
 					break;
 				}
-				source[currentY][currentX] = '' + charge;
+				if (charge < 4) {
+					source[currentY][currentX] = '' + charge;
+					total += charge;
+				} else {
+					source[currentY][currentX] = '0';
+				}
+				dots++;
+				if (dots > maxDots) {
+					error = true;
+					break;
+				}
 				charge = 0;
 			} else {
 				charge++;
 			}
-			squares--;
 		}
 	} while (error);
 	
 	return {
-		id: 'Procedural Level',
-		name: 'Different Every Time!',
 		layout: source
 	}
 }
