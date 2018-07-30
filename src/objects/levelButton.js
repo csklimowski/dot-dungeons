@@ -7,8 +7,7 @@ export class LevelButton extends Phaser.Button {
 
 		this.onInputDown.add(function() {
 			game.currentLevel = this.level;
-			game.state.start('main');
-			//console.log(this.level);
+			this.curtain.transition('main');
 		}, this);
 
 		// this.input.enableDrag();

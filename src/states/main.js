@@ -2,6 +2,7 @@ import game from '../game';
 import { buildLevelMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
 import { ChargeTracker } from '../objects/chargeTracker';
+import { Curtain } from '../objects/curtain';
 
 export class MainState extends Phaser.State {
 	create() {
@@ -9,12 +10,12 @@ export class MainState extends Phaser.State {
 		let map = buildLevelMap(game.currentLevel);
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY);
-		game.add.image(0, 0, 'paper-texture');
-		
 		let back = game.add.button(10, 10, 'ui', function() {
-			game.state.start('menu');
+			this.curtain.transition('menu');
 		}, this, 1, 0);
 		let undo = game.add.button(100, 10, 'ui', this.undo, this, 3, 2);
+		this.curtain = new Curtain();
+		game.add.image(0, 0, 'paper-texture');
 		back.scale.set(2);
 		undo.scale.set(2);
 		

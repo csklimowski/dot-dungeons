@@ -2,6 +2,7 @@ import game from '../game';
 import { LevelButton } from '../objects/levelButton';
 import { MenuButton } from '../objects/menuButton';
 import { buildProceduralMap } from '../util/map';
+import { Curtain } from '../objects/curtain';
 
 export class MenuState extends Phaser.State {
 	create() {
@@ -18,6 +19,11 @@ export class MenuState extends Phaser.State {
 			x: 0,
 			y: 0
 		};
+		
+		this.buttons.add(new MenuButton(200, 400, 'random-dungeon', function() {
+			game.currentLevel = buildProceduralMap();
+			this.curtain.transition('main');
+		}, this))
 
 		this.buttons.add(new MenuButton(1000, 400, 'puzzles', function() {
 			this.screenPos.x = 1280;
@@ -59,6 +65,10 @@ export class MenuState extends Phaser.State {
 			this.screenPos.y = 0;
 		}, this, 270));
 
+		this.curtain = new Curtain();
+		for (let levelName in game.levels) {
+			game.levels[levelName].button.curtain = this.curtain;
+		}
 		game.add.tileSprite(0, 0, 7680, 1440, 'paper-texture');
 		//game.add.image(0, 0, 'paper-texture');
 	}
