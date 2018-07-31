@@ -22,7 +22,7 @@ export class MenuState extends Phaser.State {
 		
 		this.buttons.add(new MenuButton(200, 400, 'random-dungeon', function() {
 			game.currentLevel = buildProceduralMap();
-			this.curtain.transition('main');
+			game.curtain.transition('main');
 		}, this))
 
 		this.buttons.add(new MenuButton(1000, 400, 'puzzles', function() {
@@ -64,13 +64,8 @@ export class MenuState extends Phaser.State {
 		this.buttons.add(new MenuButton(4960, 850, 'arrow', function() {
 			this.screenPos.y = 0;
 		}, this, 270));
-
-		this.curtain = new Curtain();
-		for (let levelName in game.levels) {
-			game.levels[levelName].button.curtain = this.curtain;
-		}
-		game.add.tileSprite(0, 0, 7680, 1440, 'paper-texture');
-		//game.add.image(0, 0, 'paper-texture');
+		
+		game.curtain.raise();
 	}
 
 	update() {

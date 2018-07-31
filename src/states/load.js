@@ -5,6 +5,7 @@ import { world2 } from '../levels/world2';
 import { world2b } from '../levels/world2b';
 import { world3 } from '../levels/world3';
 import { world3b } from '../levels/world3b';
+import { Curtain } from '../objects/curtain';
 
 export class LoadState extends Phaser.State {
 	preload() {
@@ -14,13 +15,13 @@ export class LoadState extends Phaser.State {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
-		game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
+		//game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
 		game.load.spritesheet('level-button', 'img/level-button.png', 32, 32);
 		game.load.spritesheet('dot', 'img/dot.png', 20, 20);
 		game.load.spritesheet('one', 'img/one.png', 80, 80);
 		game.load.spritesheet('two', 'img/two.png', 80, 80);
 		game.load.spritesheet('three', 'img/three.png', 80, 80);
-		game.load.spritesheet('number', 'img/number.png', 40, 40);
+		//game.load.spritesheet('number', 'img/number.png', 40, 40);
 		game.load.spritesheet('door', 'img/door.png', 110, 110);
 		game.load.spritesheet('ui', 'img/ui.png', 32, 32);
 		game.load.spritesheet('charge', 'img/charge.png', 60, 60);
@@ -50,6 +51,11 @@ export class LoadState extends Phaser.State {
 			game.levels[levelName].unlocked = false;
 		for (let levelName of game.data.unlocks)
 			game.levels[levelName].unlocked = true;
+
+		game.curtain = new Curtain();
+		game.stage.addChild(game.curtain);
+		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
+		game.stage.addChild(game.overlay);
 
 		game.state.start('menu');
 	}
