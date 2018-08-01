@@ -1,14 +1,19 @@
 import game from '../game';
-import { buildLevelMap, realX, realY } from '../util/map';
+import { buildLevelMap, buildProceduralMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
 import { ChargeTracker } from '../objects/chargeTracker';
 
 export class MainState extends Phaser.State {
 	create() {
-		this.graphics = game.add.graphics(0, 0);
+		if (game.mode === 'random') {
+			game.currentLevel = buildProceduralMap(game.room);
+		}
+		
 		let map = buildLevelMap(game.currentLevel);
+		this.graphics = game.add.graphics(0, 0);
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY);
+
 		let back = game.add.button(10, 10, 'ui', function() {
 			game.curtain.transition('menu');
 		}, this, 1, 0);
@@ -48,7 +53,12 @@ export class MainState extends Phaser.State {
 		pencil.y = realY(pencil.pos.y);
 
 		if (pencil.pos.x === map.endX && pencil.pos.y === map.endY) {
-			game.state.start('menu');
+			if (game.mode === 'random') {
+				game.room++;
+				game.curtain.transition('main');
+			} else {
+				game.curtain.transition('menu');
+			}
 			return;
 		}
 
