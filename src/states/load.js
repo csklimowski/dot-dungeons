@@ -18,11 +18,10 @@ export class LoadState extends Phaser.State {
 		//game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
 		game.load.spritesheet('level-button', 'img/level-button.png', 32, 32);
 		game.load.spritesheet('dot', 'img/dot.png', 20, 20);
-		game.load.spritesheet('one', 'img/one.png', 80, 80);
-		game.load.spritesheet('two', 'img/two.png', 80, 80);
-		game.load.spritesheet('three', 'img/three.png', 80, 80);
-		//game.load.spritesheet('number', 'img/number.png', 40, 40);
-		game.load.spritesheet('door', 'img/door.png', 110, 110);
+		game.load.spritesheet('one', 'img/one.png', 100, 100);
+		game.load.spritesheet('two', 'img/two.png', 100, 100);
+		game.load.spritesheet('three', 'img/three.png', 100, 100);
+		game.load.spritesheet('door', 'img/door.png', 130, 130);
 		game.load.spritesheet('ui', 'img/ui.png', 32, 32);
 		game.load.spritesheet('charge', 'img/charge.png', 60, 60);
 		game.load.spritesheet('starburst', 'img/starburst.png', 130, 130);
