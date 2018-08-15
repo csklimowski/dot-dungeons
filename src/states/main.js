@@ -41,6 +41,7 @@ export class MainState extends Phaser.State {
 	}
 
 	movePencil() {
+		if (!this.validMoves.length) return;
 		if (game.input.y < 100) return;
 
 		let pencil = this.pencil;
@@ -51,16 +52,6 @@ export class MainState extends Phaser.State {
 		pencil.pos.y = pencil.next.y;
 		pencil.x = realX(pencil.pos.x);
 		pencil.y = realY(pencil.pos.y);
-
-		if (pencil.pos.x === map.endX && pencil.pos.y === map.endY) {
-			if (game.mode === 'random') {
-				game.room++;
-				game.curtain.transition('main');
-			} else {
-				game.curtain.transition('menu');
-			}
-			return;
-		}
 
 		// inspect dot
 		let dot = map[pencil.pos.y][pencil.pos.x];
@@ -98,6 +89,16 @@ export class MainState extends Phaser.State {
 		summary.charge = this.ct.charge;
 		this.path.push(summary);
 		this.calculateValidMoves();
+
+		if (pencil.pos.x === map.endX && pencil.pos.y === map.endY) {
+			this.validMoves = [];
+			if (game.mode === 'random') {
+				game.room++;
+				game.curtain.transition('main');	
+			} else {
+				game.curtain.transition('menu');
+			}
+		}
 	}
 
 	calculateValidMoves() {

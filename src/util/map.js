@@ -74,8 +74,7 @@ export function buildProceduralMap(difficulty) {
                 for (let y = -1; y < 2; y++) {
                     if (!(x === 0 && y === 0) && 
                         currentX + x > 0 && currentY + y > 0 && 
-                        currentX + x < 8 && currentY + y < 6 &&
-                        forbidden[currentX + x] !== currentY + y) {
+                        currentX + x < 8 && currentY + y < 6) {
                         let valid = true;
                         for (let i = 0; i < path.length - 1; i++) {
                             if (path[i].x   === currentX     && path[i].y   === currentY &&
