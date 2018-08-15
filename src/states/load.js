@@ -17,7 +17,7 @@ export class LoadState extends Phaser.State {
 
 		//game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
 		game.load.spritesheet('level-button', 'img/level-button.png', 32, 32);
-		game.load.spritesheet('dot', 'img/dot.png', 20, 20);
+		game.load.spritesheet('dot', 'img/dot.png', 24, 24);
 		game.load.spritesheet('one', 'img/one.png', 100, 100);
 		game.load.spritesheet('two', 'img/two.png', 100, 100);
 		game.load.spritesheet('three', 'img/three.png', 100, 100);
@@ -31,7 +31,10 @@ export class LoadState extends Phaser.State {
 		game.load.image('puzzles', 'img/menu/puzzles.png');
 		game.load.image('arrow', 'img/menu/arrow.png');
 		game.load.image('transition', 'img/transition.png');
-		game.load.image('random-dungeon', 'img/random-dungeon.png');
+		game.load.image('random-dungeon', 'img/menu/random-dungeon.png');
+		game.load.image('logo', 'img/menu/logo.png');
+		game.load.image('how-to-play', 'img/menu/how-to-play.png');
+		game.load.image('credits', 'img/menu/credits.png');
 	}
 
 	create() {
@@ -55,6 +58,9 @@ export class LoadState extends Phaser.State {
 		game.stage.addChild(game.curtain);
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
 		game.stage.addChild(game.overlay);
+
+		game.menuX = 0;
+		game.menuY = 0;
 
 		game.state.start('menu');
 	}

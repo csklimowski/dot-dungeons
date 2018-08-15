@@ -10,21 +10,21 @@ export class Curtain extends Phaser.Image {
 
     update() {
         this.y += game.time.elapsedMS*2;
-        if (this.falling && this.y >= game.camera.y) {
+        if (this.falling && this.y >= 0) {
             game.state.start(this.newState);
             this.falling = false;
         }
     }
 
     raise() {
-        this.y = game.camera.y + game.height;
+        this.y = game.height;
         this.angle = 180;
     }
 
     transition(newState) {
         this.newState = newState;
         this.falling = true;
-        this.y = game.camera.y - 1000;
+        this.y = -1000;
         this.angle = 0;
     }
 }
