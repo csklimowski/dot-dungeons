@@ -2,11 +2,20 @@ import game from '../game';
 import { buildLevelMap, buildProceduralMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
 import { ChargeTracker } from '../objects/chargeTracker';
+import { MenuButton } from '../objects/menuButton';
 
 export class MainState extends Phaser.State {
 	create() {
+
+		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 70);
 		if (game.mode === 'random') {
 			game.currentLevel = buildProceduralMap(game.room);
+			levelText.text = 'Room ' + game.room;
+		} else if (game.mode === 'tutorial') {
+			game.currentLevel = game.tutorial[game.room];
+			levelText.text = 'How to Play';
+		} else if (game.mode === 'puzzle') {
+			levelText.text = '1-1';
 		}
 		
 		let map = buildLevelMap(game.currentLevel);
@@ -14,12 +23,11 @@ export class MainState extends Phaser.State {
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY);
 
-		let back = game.add.button(10, 10, 'ui', function() {
+		let undo = new MenuButton(1150, 45, 'undo', this.undo, this);
+		let exit = new MenuButton(1230, 45, 'exit', function() {
+			game.infoBox.dismiss();
 			game.curtain.transition('menu');
-		}, this, 1, 0);
-		let undo = game.add.button(100, 10, 'ui', this.undo, this, 3, 2);
-		back.scale.set(2);
-		undo.scale.set(2);
+		}, this);
 		
 		this.path = [{
 			x: map.startX,
@@ -34,6 +42,11 @@ export class MainState extends Phaser.State {
 		map[map.startY][map.startX].markVisited();
 		this.map = map;
 		this.calculateValidMoves();
+
+		if (map[map.startY][map.startX].hasInfo) {
+			game.infoBox.appear(map[map.startY][map.startX].info);
+		}
+		if (map.remaining <= 0) this.exit.unlock();
 
 		game.input.onDown.add(this.movePencil, this);
 
@@ -62,6 +75,10 @@ export class MainState extends Phaser.State {
 			visited: false,
 			finished: false,
 		};
+
+		// check for info box
+		if (dot.hasInfo) game.infoBox.appear(dot.info);
+		else             game.infoBox.dismiss();
 
 		// defeat number
 		if (dot.hasNumber) {
@@ -95,6 +112,13 @@ export class MainState extends Phaser.State {
 			if (game.mode === 'random') {
 				game.room++;
 				game.curtain.transition('main');	
+			} else if (game.mode === 'tutorial') {
+				game.room++;
+				if (game.room >= game.tutorial.length) {
+					game.curtain.transition('menu');
+				} else {
+					game.curtain.transition('main');
+				}
 			} else {
 				game.curtain.transition('menu');
 			}
@@ -185,6 +209,11 @@ export class MainState extends Phaser.State {
 		}
 		if (ult.finished) {
 			this.exit.lock();
+		}
+		if (this.map[pen.y][pen.x].hasInfo) {
+			game.infoBox.appear(this.map[pen.y][pen.x].info);
+		} else {
+			game.infoBox.dismiss();
 		}
 		this.calculateValidMoves();
 	}

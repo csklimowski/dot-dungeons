@@ -19,11 +19,12 @@ export function buildLevelMap(source) {
                 row.push(null);
             } else  {
                 let dot = new Dot(realX(x), realY(y), type)
-                if (dot.hasNumber) map.remaining ++;
+                if (dot.hasNumber) map.remaining++;
+                if (dot.hasInfo) dot.info = source.info[type];
                 row.push(dot);
             }
 
-            if (type === 'N') {
+            if (type === 'N' || type === 'n') {
                 map.startX = x;
                 map.startY = y;
             }

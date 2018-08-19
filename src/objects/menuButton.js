@@ -11,17 +11,11 @@ export class MenuButton extends Phaser.Button {
         if (angle) this.angle = angle;
 
         this.onInputOver.add(function() {
-            this.targetScale = 1.1;
+            this.scale.set(1.1);
         }, this);
     
         this.onInputOut.add(function() {
-            this.targetScale = 1;
+            this.scale.set(1);
         }, this);
 	}
-    
-    update() {
-        let dt = game.time.elapsedMS / 1000;
-        this.scale.x += 10*(this.targetScale - this.scale.x)*dt;
-        this.scale.y += 10*(this.targetScale - this.scale.y)*dt;
-    }
 }

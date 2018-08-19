@@ -67,6 +67,15 @@ export class Dot extends Phaser.Image {
 		} else {
 			this.locked = false;
 		}
+
+		if ('abcdn'.indexOf(type) !== -1) {
+			let qm = game.add.sprite(x, y, 'question-mark');
+			qm.anchor.set(0.5);
+			this.qm = qm;
+			this.hasInfo = true;
+		} else {
+			this.hasInfo = false;
+		}
 	}
 
 	markVisited() {

@@ -5,7 +5,9 @@ import { world2 } from '../levels/world2';
 import { world2b } from '../levels/world2b';
 import { world3 } from '../levels/world3';
 import { world3b } from '../levels/world3b';
+import { tutorial } from '../levels/tutorial';
 import { Curtain } from '../objects/curtain';
+import { InfoBox } from '../objects/infoBox';
 
 export class LoadState extends Phaser.State {
 	preload() {
@@ -22,7 +24,6 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('two', 'img/two.png', 100, 100);
 		game.load.spritesheet('three', 'img/three.png', 100, 100);
 		game.load.spritesheet('door', 'img/door.png', 130, 130);
-		game.load.spritesheet('ui', 'img/ui.png', 32, 32);
 		game.load.spritesheet('charge', 'img/charge.png', 60, 60);
 		game.load.spritesheet('starburst', 'img/starburst.png', 130, 130);
 		game.load.image('paper-texture', 'img/paper-texture.png');
@@ -35,6 +36,12 @@ export class LoadState extends Phaser.State {
 		game.load.image('logo', 'img/menu/logo.png');
 		game.load.image('how-to-play', 'img/menu/how-to-play.png');
 		game.load.image('credits', 'img/menu/credits.png');
+		game.load.image('info-box', 'img/info-box.png');
+		game.load.image('question-mark', 'img/question-mark.png');
+		game.load.image('undo', 'img/undo.png');
+		game.load.image('exit', 'img/exit.png');
+
+		game.load.bitmapFont('handwriting', 'font/small.png', 'font/small.fnt');
 	}
 
 	create() {
@@ -46,6 +53,8 @@ export class LoadState extends Phaser.State {
 			docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
 		}
 
+		game.tutorial = tutorial;
+
 		game.levels = [];
 		Object.assign(game.levels, world1, world1b, world2, world2b, world3, world3b);
 
@@ -54,6 +63,7 @@ export class LoadState extends Phaser.State {
 		for (let levelName of game.data.unlocks)
 			game.levels[levelName].unlocked = true;
 
+		game.infoBox = new InfoBox();
 		game.curtain = new Curtain();
 		game.stage.addChild(game.curtain);
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');

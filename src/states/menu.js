@@ -22,20 +22,25 @@ export class MenuState extends Phaser.State {
 			x: 0,
 			y: 0
 		};
-		
+
 		this.buttons.add(new MenuButton(200, 400, 'random-dungeon', function() {
 			game.mode = 'random';
 			game.room = 1;
 			game.curtain.transition('main');
-		}, this))
+		}, this));
 
 		this.buttons.add(new MenuButton(1100, 400, 'puzzles', function() {
 			game.menuX = 1280;
 		}, this));
 
+		this.buttons.add(new MenuButton(630, 400, 'how-to-play', function() {
+			game.mode = 'tutorial';
+			game.room = 0;
+			game.curtain.transition('main');
+		}, this));
+
 		game.add.image(350, 50, 'logo');
 		game.add.image(500, 550, 'credits');
-		game.add.image(470, 330, 'how-to-play');
 
 		this.buttons.add(new MenuButton(1400, 300, 'arrow', function() {
 			game.menuX = 0;
@@ -72,7 +77,7 @@ export class MenuState extends Phaser.State {
 		this.buttons.add(new MenuButton(4960, 850, 'arrow', function() {
 			game.menuY = 0;
 		}, this, 270));
-		
+
 		game.curtain.raise();
 	}
 
