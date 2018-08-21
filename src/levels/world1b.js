@@ -59,7 +59,7 @@ export const world1b = {
         y: 820,
         layout: [
             '          ',
-            '    00    ',
+            '    01    ',
             '    01    ',
             '    01    ',
             '    01    ',

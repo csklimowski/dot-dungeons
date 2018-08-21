@@ -49,13 +49,13 @@ export function buildProceduralMap(difficulty) {
         tries++;
         error = false;
         source = [
-            Array(9).fill(' '),
-            Array(9).fill(' '),
-            Array(9).fill(' '),
-            Array(9).fill(' '),
-            Array(9).fill(' '),
-            Array(9).fill(' '),
-            Array(9).fill(' ')
+            Array(11).fill(' '),
+            Array(11).fill(' '),
+            Array(11).fill(' '),
+            Array(11).fill(' '),
+            Array(11).fill(' '),
+            Array(11).fill(' '),
+            Array(11).fill(' ')
         ];
 
         let forbidden = {};
