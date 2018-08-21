@@ -33,14 +33,14 @@ export class MenuState extends Phaser.State {
 			game.menuX = 1280;
 		}, this));
 
-		this.buttons.add(new MenuButton(630, 400, 'how-to-play', function() {
+		this.buttons.add(new MenuButton(650, 400, 'how-to-play', function() {
 			game.mode = 'tutorial';
 			game.room = 0;
 			game.curtain.transition('main');
 		}, this));
 
 		game.add.image(350, 50, 'logo');
-		game.add.image(500, 550, 'credits');
+		game.add.image(520, 550, 'credits');
 
 		this.buttons.add(new MenuButton(1400, 300, 'arrow', function() {
 			game.menuX = 0;

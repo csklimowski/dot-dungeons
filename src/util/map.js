@@ -2,7 +2,7 @@ import game from '../game';
 
 import { Dot } from '../objects/dot';
 
-export function realX(x) { return 250 + 100*x; }
+export function realX(x) { return 150 + 100*x; }
 export function realY(y) { return 100 + 100*y; }
 
 export function buildLevelMap(source) {

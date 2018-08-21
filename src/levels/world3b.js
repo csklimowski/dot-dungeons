@@ -9,7 +9,7 @@ export const world3b = {
             '   N000X   ',
             '    030    ',
             '           ',
-            '           ',
+            '           '
         ],
         unlocks: []
     },
@@ -23,7 +23,7 @@ export const world3b = {
             '    01    ',
             '    02    ',
             '    03    ',
-            '          ',
+            '          '
         ],
         unlocks: []
     }
