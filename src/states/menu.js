@@ -1,6 +1,5 @@
 import game from '../game';
-import { LevelButton } from '../objects/levelButton';
-import { MenuButton } from '../objects/menuButton';
+import { MenuButton, LevelButton, MenuArrow } from '../objects/buttons';
 import { buildProceduralMap } from '../util/map';
 
 export class MenuState extends Phaser.State {
@@ -18,65 +17,43 @@ export class MenuState extends Phaser.State {
 			game.levels[levelName].button = new LevelButton(game.levels[levelName]);
 		}
 
-		this.screenPos = {
-			x: 0,
-			y: 0
-		};
+		this.scenery = [
+			game.add.image(350, 50, 'logo'),
+			game.add.image(520, 550, 'credits'),
+		]
 
-		this.buttons.add(new MenuButton(200, 400, 'random-dungeon', function() {
-			game.mode = 'random';
-			game.room = 1;
-			game.curtain.transition('main');
-		}, this));
 
-		this.buttons.add(new MenuButton(1100, 400, 'puzzles', function() {
-			game.menuX = 1280;
-		}, this));
+		this.buttons = [
+			new MenuButton(200, 400, 'random-dungeon', function() {
+				game.mode = 'random';
+				game.room = 1;
+				game.curtain.transition('main');
+			}, this),
 
-		this.buttons.add(new MenuButton(650, 400, 'how-to-play', function() {
-			game.mode = 'tutorial';
-			game.room = 0;
-			game.curtain.transition('main');
-		}, this));
+			new MenuButton(1100, 400, 'puzzles', function() {
+				game.menuX = 1280;
+			}, this),
 
-		game.add.image(350, 50, 'logo');
-		game.add.image(520, 550, 'credits');
+			new MenuButton(650, 400, 'how-to-play', function() {
+				game.mode = 'tutorial';
+				game.room = 0;
+				game.curtain.transition('main');
+			}, this),
 
-		this.buttons.add(new MenuButton(1400, 300, 'arrow', function() {
-			game.menuX = 0;
-		}, this, 180));
-		this.buttons.add(new MenuButton(2400, 300, 'arrow', function() {
-			game.menuX = 2560;
-		}, this, 0));
-		this.buttons.add(new MenuButton(2400, 500, 'arrow', function() {
-			game.menuY = 720;
-		}, this, 90));
-		this.buttons.add(new MenuButton(2400, 850, 'arrow', function() {
-			game.menuY = 0;
-		}, this, 270));
-		
-		this.buttons.add(new MenuButton(2680, 300, 'arrow', function() {
-			game.menuX = 1280;
-		}, this, 180));
-		this.buttons.add(new MenuButton(3680, 300, 'arrow', function() {
-			game.menuX = 3840;
-		}, this, 0));
-		this.buttons.add(new MenuButton(3680, 500, 'arrow', function() {
-			game.menuY = 720;
-		}, this, 90));
-		this.buttons.add(new MenuButton(3680, 850, 'arrow', function() {
-			game.menuY = 0;
-		}, this, 270));
+			new MenuArrow(1400, 300, 0, 0, 0),
+			new MenuArrow(2400, 300, 2560, 0, 180),
+			new MenuArrow(2400, 500, 1280, 720, 270),
+			new MenuArrow(2400, 850, 1280, 0, 90),
 
-		this.buttons.add(new MenuButton(3960, 300, 'arrow', function() {
-			game.menuX = 2560;
-		}, this, 180));
-		this.buttons.add(new MenuButton(4960, 500, 'arrow', function() {
-			game.menuY = 720;
-		}, this, 90));
-		this.buttons.add(new MenuButton(4960, 850, 'arrow', function() {
-			game.menuY = 0;
-		}, this, 270));
+			new MenuArrow(2680, 300, 1280, 0, 0),
+			new MenuArrow(3680, 300, 3840, 0, 180),
+			new MenuArrow(3680, 500, 2560, 720, 270),
+			new MenuArrow(3680, 850, 2560, 0, 90),
+
+			new MenuArrow(3960, 300, 2560, 0, 0),
+			new MenuArrow(4960, 500, 3840, 720, 270),
+			new MenuArrow(4960, 850, 3840, 0, 90),
+		]
 
 		game.curtain.raise();
 	}

@@ -2,7 +2,7 @@ import game from '../game';
 import { buildLevelMap, buildProceduralMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
 import { ChargeTracker } from '../objects/chargeTracker';
-import { MenuButton } from '../objects/menuButton';
+import { MenuButton } from '../objects/buttons';
 
 export class MainState extends Phaser.State {
 	create() {
