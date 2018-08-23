@@ -45,30 +45,48 @@ export class LoadState extends Phaser.State {
 	}
 
 	create() {
+		// retrieve cookie
 		if (docCookies.hasItem('dot_dungeons_data')) {
 			let dataString = docCookies.getItem('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
-			game.data = { unlocks: ['1-1'] };
+			game.data = {
+				'1-1': {
+					unlocked: true,
+					completed: false
+				}
+			};
 			docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
 		}
 
+		// load levels
 		game.tutorial = tutorial;
-
 		game.levels = [];
 		Object.assign(game.levels, world1, world1b, world2, world2b, world3, world3b);
 
-		for (let levelName in game.levels)
-			game.levels[levelName].unlocked = false;
-		for (let levelName of game.data.unlocks)
-			game.levels[levelName].unlocked = true;
+		// import save data
+		for (let levelName in game.levels) {
+			game.levels[levelName].name = levelName;
+			if (!(levelName in game.data)) {
+				game.data[levelName] = {
+					unlocked: false,
+					completed: false
+				}
+			}
+		}
+		for (let levelName in game.data) {
+			game.levels[levelName].unlocked = game.data[levelName].unlocked;
+			game.levels[levelName].completed = game.data[levelName].completed;
+		}
 
+		// create permanent elements
 		game.infoBox = new InfoBox();
 		game.curtain = new Curtain();
 		game.stage.addChild(game.curtain);
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
 		game.stage.addChild(game.overlay);
 
+		// initialize globals
 		game.menuX = 0;
 		game.menuY = 0;
 
