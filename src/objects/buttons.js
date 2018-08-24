@@ -1,8 +1,9 @@
 import game from '../game';
 
-export class LevelButton extends Phaser.Button {
+export class LevelButton extends Phaser.Sprite {
 	constructor(level) {
-		super(game, level.x, level.y, 'level-button', null, null, 1, 0, 1, 0);
+		let levelInfo = game.levels[level];
+		super(game, levelInfo.x, levelInfo.y, 'level-button');
 		game.add.existing(this);
 
 		// this.onInputDown.add(function() {
@@ -10,13 +11,38 @@ export class LevelButton extends Phaser.Button {
 		// 	game.curtain.transition('main');
 		// }, this);
 
-		this.input.enableDrag();
-
-		this.setFrames(1, 0, 1, 0);
-
+		this.anchor.set(0.5, 0.7);
 		this.level = level;
-		this.anchor.set(0.5);
-		this.scale.set(2);
+		this.inputEnabled = true;
+		if (levelInfo.completed) {
+			this.enabled = true;
+			this.overFrame = 2;
+			this.outFrame = 12;	
+		} else if (levelInfo.unlocked) {
+			this.enabled = true;
+			this.overFrame = 6;
+			this.outFrame = 11;
+		} else {
+			this.enabled = false;
+			this.overFrame = 0;
+			this.outFrame = 0;
+		}
+
+		this.frame = this.outFrame;
+		this.events.onInputOver.add(function() {
+			this.frame = this.overFrame;
+		}, this);
+		this.events.onInputOut.add(function() {
+			this.frame = this.outFrame;
+		}, this);
+		this.events.onInputDown.add(function() {
+			if (this.enabled) {
+				game.currentLevel = this.level;
+				game.curtain.transition('main');
+			}
+		}, this);
+
+		this.input.enableDrag();
 	}
 }
 

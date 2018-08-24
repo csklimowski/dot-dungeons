@@ -3,6 +3,7 @@ import game from '../game';
 export class Curtain extends Phaser.Image {
     constructor() {
         super(game, game.width/2, 0, 'transition');
+        game.stage.addChild(this);
         this.anchor.set(0.5, 0);
         this.falling = false;
         this.newState = 'menu';

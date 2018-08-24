@@ -18,7 +18,7 @@ export class LoadState extends Phaser.State {
         game.scale.pageAlignVertically = true;
 
 		//game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
-		game.load.spritesheet('level-button', 'img/level-button.png', 32, 32);
+		game.load.spritesheet('level-button', 'img/menu/level-button.png', 70, 70);
 		game.load.spritesheet('dot', 'img/dot.png', 24, 24);
 		game.load.spritesheet('one', 'img/one.png', 100, 100);
 		game.load.spritesheet('two', 'img/two.png', 100, 100);
@@ -28,7 +28,6 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('starburst', 'img/starburst.png', 130, 130);
 		game.load.spritesheet('arrow', 'img/menu/level-arrow.png', 110, 110);
 		game.load.image('paper-texture', 'img/paper-texture.png');
-		game.load.image('level-popup', 'img/level-popup.png');
 		game.load.image('pencil', 'img/pencil.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
 		game.load.image('transition', 'img/transition.png');
@@ -47,16 +46,18 @@ export class LoadState extends Phaser.State {
 	create() {
 		// retrieve cookie
 		if (docCookies.hasItem('dot_dungeons_data')) {
+			console.log('data detected!');
 			let dataString = docCookies.getItem('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
 			game.data = {
-				'1-1': {
-					unlocked: true,
-					completed: false
+				levels: {
+					'1-1': {
+						unlocked: true,
+						completed: false
+					}
 				}
 			};
-			docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
 		}
 
 		// load levels
@@ -66,23 +67,21 @@ export class LoadState extends Phaser.State {
 
 		// import save data
 		for (let levelName in game.levels) {
-			game.levels[levelName].name = levelName;
-			if (!(levelName in game.data)) {
-				game.data[levelName] = {
+			if (!game.data.levels[levelName]) {
+				game.data.levels[levelName] = {
 					unlocked: false,
 					completed: false
 				}
 			}
 		}
-		for (let levelName in game.data) {
-			game.levels[levelName].unlocked = game.data[levelName].unlocked;
-			game.levels[levelName].completed = game.data[levelName].completed;
+		for (let levelName in game.data.levels) {
+			game.levels[levelName].unlocked = game.data.levels[levelName].unlocked;
+			game.levels[levelName].completed = game.data.levels[levelName].completed;
 		}
 
 		// create permanent elements
 		game.infoBox = new InfoBox();
 		game.curtain = new Curtain();
-		game.stage.addChild(game.curtain);
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
 		game.stage.addChild(game.overlay);
 

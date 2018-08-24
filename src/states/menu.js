@@ -4,6 +4,7 @@ import { buildProceduralMap } from '../util/map';
 
 export class MenuState extends Phaser.State {
 	create() {
+		docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
 		game.world.setBounds(0, 0, 7680, 1440);
 		game.stage.backgroundColor = 0xffffff;
 		this.graphics = game.add.graphics(0, 0);
@@ -14,7 +15,8 @@ export class MenuState extends Phaser.State {
 		game.camera.y = game.menuY;
 
 		for (let levelName in game.levels) {
-			game.levels[levelName].button = new LevelButton(game.levels[levelName]);
+			let button = new LevelButton(levelName);
+			game.levels[levelName].button = button;
 		}
 
 		this.scenery = [
@@ -70,8 +72,10 @@ export class MenuState extends Phaser.State {
 			let level = game.levels[levelName];
 			for (let nextName of level.unlocks) {
 				let next = game.levels[nextName];
-				g.moveTo(level.button.x, level.button.y);
-				g.lineTo(next.button.x, next.button.y);
+				if (next.unlocked) {
+					g.moveTo(level.button.x, level.button.y);
+					g.lineTo(next.button.x, next.button.y);
+				}
 			}
 		}
 	}

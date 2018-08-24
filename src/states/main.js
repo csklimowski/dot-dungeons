@@ -7,18 +7,20 @@ import { MenuButton } from '../objects/buttons';
 export class MainState extends Phaser.State {
 	create() {
 
+		let levelSource;
 		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 70);
 		if (game.mode === 'random') {
-			game.currentLevel = buildProceduralMap(game.room);
+			levelSource = buildProceduralMap(game.room);
 			levelText.text = 'Room ' + game.room;
 		} else if (game.mode === 'tutorial') {
-			game.currentLevel = game.tutorial[game.room];
+			levelSource = game.tutorial[game.room];
 			levelText.text = 'How to Play';
 		} else if (game.mode === 'puzzle') {
-			levelText.text = '1-1';
+			levelSource = game.levels[game.currentLevel];
+			levelText.text = game.currentLevel;
 		}
 		
-		let map = buildLevelMap(game.currentLevel);
+		let map = buildLevelMap(levelSource);
 		this.graphics = game.add.graphics(0, 0);
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY);
@@ -111,7 +113,7 @@ export class MainState extends Phaser.State {
 			this.validMoves = [];
 			if (game.mode === 'random') {
 				game.room++;
-				game.curtain.transition('main');	
+				game.curtain.transition('main');
 			} else if (game.mode === 'tutorial') {
 				game.room++;
 				if (game.room >= game.tutorial.length) {
@@ -120,6 +122,12 @@ export class MainState extends Phaser.State {
 					game.curtain.transition('main');
 				}
 			} else {
+				game.levels[game.currentLevel].completed = true;
+				game.data.levels[game.currentLevel].completed = true;
+				for (let unlock of game.levels[game.currentLevel].unlocks) {
+					game.levels[unlock].unlocked = true;
+					game.data.levels[unlock].unlocked = true;
+				}
 				game.curtain.transition('menu');
 			}
 		}
