@@ -14,6 +14,16 @@ export class MenuState extends Phaser.State {
 		game.camera.x = game.menuX;
 		game.camera.y = game.menuY;
 
+		game.world1arrows = [
+			new MenuArrow(2400, 300, 2560, 0, 180, game.levels['1-5'].completed),
+			new MenuArrow(2400, 500, 1280, 720, 270, game.levels['1-5'].completed)
+		];
+
+		game.world2arrows = [
+			new MenuArrow(3680, 300, 3840, 0, 180, game.levels['2-5'].completed),
+			new MenuArrow(3680, 500, 2560, 720, 270, game.levels['2-5'].completed)
+		];
+
 		for (let levelName in game.levels) {
 			let button = new LevelButton(levelName);
 			game.levels[levelName].button = button;
@@ -22,7 +32,7 @@ export class MenuState extends Phaser.State {
 		this.scenery = [
 			game.add.image(350, 50, 'logo'),
 			game.add.image(520, 550, 'credits'),
-		]
+		];
 
 
 		this.buttons = [
@@ -42,19 +52,15 @@ export class MenuState extends Phaser.State {
 				game.curtain.transition('main');
 			}, this),
 
-			new MenuArrow(1400, 300, 0, 0, 0),
-			new MenuArrow(2400, 300, 2560, 0, 180),
-			new MenuArrow(2400, 500, 1280, 720, 270),
-			new MenuArrow(2400, 850, 1280, 0, 90),
+			new MenuArrow(1400, 300, 0, 0, 0, true),	
+			new MenuArrow(2400, 850, 1280, 0, 90, true),
 
-			new MenuArrow(2680, 300, 1280, 0, 0),
-			new MenuArrow(3680, 300, 3840, 0, 180),
-			new MenuArrow(3680, 500, 2560, 720, 270),
-			new MenuArrow(3680, 850, 2560, 0, 90),
+			new MenuArrow(2680, 300, 1280, 0, 0, true),
+			new MenuArrow(3680, 850, 2560, 0, 90, true),
 
-			new MenuArrow(3960, 300, 2560, 0, 0),
-			new MenuArrow(4960, 500, 3840, 720, 270),
-			new MenuArrow(4960, 850, 3840, 0, 90),
+			new MenuArrow(3960, 300, 2560, 0, 0, true),
+			new MenuArrow(4960, 500, 3840, 720, 270, true),
+			new MenuArrow(4960, 850, 3840, 0, 90, true),
 		]
 
 		game.curtain.raise();

@@ -122,10 +122,11 @@ export class MainState extends Phaser.State {
 					game.curtain.transition('main');
 				}
 			} else {
-				game.levels[game.currentLevel].completed = true;
+				if (!game.levels[game.currentLevel].completed) {
+					game.justCompleted = game.currentLevel;
+				}
 				game.data.levels[game.currentLevel].completed = true;
 				for (let unlock of game.levels[game.currentLevel].unlocks) {
-					game.levels[unlock].unlocked = true;
 					game.data.levels[unlock].unlocked = true;
 				}
 				game.curtain.transition('menu');
