@@ -19,7 +19,7 @@ export function buildLevelMap(source) {
                 row.push(null);
             } else  {
                 let dot = new Dot(realX(x), realY(y), type)
-                if (dot.hasNumber) map.remaining++;
+                if (dot.hasNumber || dot.hasInfo) map.remaining++;
                 if (dot.hasInfo) dot.info = source.info[type];
                 row.push(dot);
             }
@@ -27,6 +27,7 @@ export function buildLevelMap(source) {
             if (type === 'N' || type === 'n') {
                 map.startX = x;
                 map.startY = y;
+                if (type === 'n') map.remaining--;
             }
 
             if (type === 'X') {
@@ -36,6 +37,7 @@ export function buildLevelMap(source) {
         }
         map.push(row);
     }
+    console.log(map.remaining);
     return map;
 }
 

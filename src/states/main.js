@@ -8,7 +8,7 @@ export class MainState extends Phaser.State {
 	create() {
 
 		let levelSource;
-		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 70);
+		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 80);
 		if (game.mode === 'random') {
 			levelSource = buildProceduralMap(game.room);
 			levelText.text = 'Room ' + game.room;
@@ -48,7 +48,6 @@ export class MainState extends Phaser.State {
 		if (map[map.startY][map.startX].hasInfo) {
 			game.infoBox.appear(map[map.startY][map.startX].info);
 		}
-		if (map.remaining <= 0) this.exit.unlock();
 
 		game.input.onDown.add(this.movePencil, this);
 
@@ -88,10 +87,6 @@ export class MainState extends Phaser.State {
 				map.remaining -= 1;
 				dot.defeatNumber();
 				summary.cleared = true;
-				if (map.remaining <= 0) {
-					this.exit.unlock();
-					summary.finished = true;
-				}
 			}
 		}
 
@@ -99,9 +94,17 @@ export class MainState extends Phaser.State {
 		if (dot.visited) {
 			this.ct.gainCharge();
 		} else {
+			if (dot.hasInfo && !dot.everVisited) map.remaining -= 1;
+			console.log(map.remaining);
 			this.ct.loseCharge();
 			dot.markVisited();
 			summary.visited = true;
+		}
+
+		// unlock exit
+		if (map.remaining <= 0) {
+			this.exit.unlock();
+			summary.finished = true;
 		}
 		
 		// update charge;
@@ -212,12 +215,12 @@ export class MainState extends Phaser.State {
 		if (ult.cleared) {
 			this.map[ult.y][ult.x].reviveNumber();
 			this.map.remaining++;
+			if (ult.finished) {
+				this.exit.lock();
+			}
 		}
 		if (ult.visited) {
 			this.map[ult.y][ult.x].unmarkVisited();
-		}
-		if (ult.finished) {
-			this.exit.lock();
 		}
 		if (this.map[pen.y][pen.x].hasInfo) {
 			game.infoBox.appear(this.map[pen.y][pen.x].info);

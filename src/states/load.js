@@ -39,14 +39,14 @@ export class LoadState extends Phaser.State {
 		game.load.image('question-mark', 'img/question-mark.png');
 		game.load.image('undo', 'img/undo.png');
 		game.load.image('exit', 'img/exit.png');
+		game.load.image('world1', 'img/menu/world1.png');
 
-		game.load.bitmapFont('handwriting', 'font/small.png', 'font/small.fnt');
+		game.load.bitmapFont('handwriting', 'font/hw5.png', 'font/hw5.fnt');
 	}
 
 	create() {
 		// retrieve cookie
 		if (docCookies.hasItem('dot_dungeons_data')) {
-			console.log('data detected!');
 			let dataString = docCookies.getItem('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
@@ -59,6 +59,31 @@ export class LoadState extends Phaser.State {
 				}
 			};
 		}
+
+		game.data = {
+			levels: {
+				'1-1': {
+					unlocked: true,
+					completed: true
+				},
+				'1-2': {
+					unlocked: true,
+					completed: true
+				},
+				'1-3': {
+					unlocked: true,
+					completed: true
+				},
+				'1-4': {
+					unlocked: true,
+					completed: true
+				},
+				'1-5': {
+					unlocked: true,
+					completed: false
+				}
+			}
+		};
 
 		// load levels
 		game.tutorial = tutorial;
