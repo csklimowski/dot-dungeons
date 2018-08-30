@@ -10,10 +10,14 @@ export class Curtain extends Phaser.Image {
     }
 
     update() {
-        this.y += game.time.elapsedMS*2;
-        if (this.falling && this.y >= 0) {
-            game.state.start(this.newState);
-            this.falling = false;
+        if (this.falling) {
+            this.y = Math.min(0, this.y + game.time.elapsedMS*2);
+            if (this.y >= 0) {
+                game.state.start(this.newState);
+                this.falling = false;
+            }
+        } else {
+            this.y += game.time.elapsedMS*2;
         }
     }
 
