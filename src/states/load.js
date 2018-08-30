@@ -40,6 +40,7 @@ export class LoadState extends Phaser.State {
 		game.load.image('undo', 'img/undo.png');
 		game.load.image('exit', 'img/exit.png');
 		game.load.image('world1', 'img/menu/world1.png');
+		game.load.image('worldx', 'img/menu/worldx.png');
 
 		game.load.bitmapFont('handwriting', 'font/hw5.png', 'font/hw5.fnt');
 	}
@@ -79,6 +80,14 @@ export class LoadState extends Phaser.State {
 					completed: true
 				},
 				'1-5': {
+					unlocked: true,
+					completed: true
+				},
+				'2-1': {
+					unlocked: true,
+					completed: false
+				},
+				'X-1': {
 					unlocked: true,
 					completed: false
 				}

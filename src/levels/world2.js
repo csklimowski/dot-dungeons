@@ -1,7 +1,7 @@
 export const world2 = {
     '2-1': {
-        x: 2660,
-        y: 100,
+        x: 2760,
+        y: 500,
         layout: [
             '          ',
             '          ',

@@ -1,7 +1,7 @@
 export const world1b = {
-    '1-1b': {
-        x: 1380,
-        y: 820,
+    'X-1': {
+        x: 2330,
+        y: 890,
         layout: [
             '           ',
             '   10101   ',
@@ -11,11 +11,11 @@ export const world1b = {
             '   10101   ',
             '           '
         ],
-        unlocks: ['1-2b']
+        unlocks: ['X-2']
     },
-    '1-2b': {
-        x: 1580,
-        y: 820,
+    'X-2': {
+        x: 2050,
+        y: 940,
         layout: [
             '          ',
             '          ',
@@ -25,11 +25,11 @@ export const world1b = {
             '          ',
             '          '
         ],
-        unlocks: ['1-3b']
+        unlocks: ['X-3']
     },
-    '1-3b': {
-        x: 1780,
-        y: 820,
+    'X-3': {
+        x: 1950,
+        y: 1100,
         layout: [
             '           ',
             '           ',
@@ -38,11 +38,11 @@ export const world1b = {
             '           ',
             '           '
         ],
-        unlocks: ['1-4b']
+        unlocks: ['X-4']
     },
-    '1-4b': {
-        x: 1980,
-        y: 820,
+    'X-4': {
+        x: 1700,
+        y: 1170,
         layout: [
             '           ',
             '           ',
@@ -52,11 +52,11 @@ export const world1b = {
             '           ',
             '           '
         ],
-        unlocks: ['1-5b']
+        unlocks: ['X-5']
     },
-    '1-5b': {
-        x: 2180,
-        y: 820,
+    'X-5': {
+        x: 1440,
+        y: 1170,
         layout: [
             '          ',
             '    01    ',

@@ -16,8 +16,8 @@ export class MenuState extends Phaser.State {
 		game.camera.y = game.menuY;
 
 		game.world1arrows = [
-			new MenuArrow(2450, 300, 2560, 0, 180, game.levels['1-5'].completed),
-			new MenuArrow(2250, 600, 1280, 720, 270, game.levels['1-5'].completed)
+			new MenuArrow(2400, 420, 2560, 0, 180, game.levels['1-5'].completed),
+			new MenuArrow(2200, 630, 1280, 720, 270, game.levels['1-5'].completed)
 		];
 		game.world2arrows = [
 			new MenuArrow(3680, 300, 3840, 0, 180, game.levels['2-5'].completed),
@@ -33,7 +33,8 @@ export class MenuState extends Phaser.State {
 			game.add.image(350, 50, 'logo'),
 			game.add.image(520, 550, 'credits'),
 			game.add.image(1280, 0, 'world1'),
-			new Number(2010, 80, '1')
+			new Number(1900, 90, '1'),
+			game.add.image(1280, 720, 'worldx'),
 		];
 
 
@@ -54,8 +55,8 @@ export class MenuState extends Phaser.State {
 				game.curtain.transition('main');
 			}, this),
 
-			new MenuArrow(1400, 100, 0, 0, 0, true),	
-			new MenuArrow(2400, 850, 1280, 0, 90, true),
+			new MenuArrow(1400, 130, 0, 0, 0, true),	
+			new MenuArrow(2450, 850, 1280, 0, 90, true),
 
 			new MenuArrow(2680, 300, 1280, 0, 0, true),
 			new MenuArrow(3680, 850, 2560, 0, 90, true),
