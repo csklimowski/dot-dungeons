@@ -10,13 +10,13 @@ import game from '../game';
 
 export class Number extends Phaser.Sprite {
 	constructor(x, y, type) {
-		let idleFrames, dieFrames, value, key;
+		let idleFrames, deadFrame, value, key;
 		if (type === '1') {
 			idleFrames = [0, 1, 2, 3, 4, 5, 6, 7,
 						  7, 7, 7, 7, 7, 7, 7, 7,
 						  7, 6, 5, 4, 3, 2, 1, 0,
 						  0, 0, 0, 0, 0, 0, 0, 0];
-			dieFrames = [8];
+			deadFrame = 8;
 			value = 1;
 			key = 'one';
 		} else if (type === '2') {
@@ -24,7 +24,7 @@ export class Number extends Phaser.Sprite {
 						  8, 7, 6, 5, 4, 3, 2, 1,
 						  0, 9, 10, 11, 12, 13, 14, 15,
 						  16, 15, 14, 13, 12, 11, 10, 9];
-			dieFrames = [18];
+			deadFrame = 17;
 			value = 2;
 			key = 'two';
 		} else if (type === '3') {
@@ -32,7 +32,7 @@ export class Number extends Phaser.Sprite {
 						  8, 9, 10, 11, 12, 13, 14, 15,
 						  16, 17, 18, 19, 20, 21, 22, 23,
 						  24, 25, 26, 27, 28, 29, 30, 31];
-			dieFrames = [32];
+			deadFrame = 32;
 			value = 3;
 			key = 'three';
 		}
@@ -42,7 +42,7 @@ export class Number extends Phaser.Sprite {
 		this.anchor.set(0.5);
 		this.value = value;
 		this.animations.add('idle', idleFrames, 20, true);
-		this.animations.add('die', dieFrames, 20, false);
+		this.animations.add('die', [deadFrame], 0, false);
 		this.animations.play('idle');
 	}
 }
@@ -57,9 +57,11 @@ export class Dot extends Phaser.Image {
 
 		if (type === '1' || type === '2' || type === '3') {
 			this.hasNumber = true;
+			this.hadNumber = false;
 			this.number = new Number(x, y, type);
 		} else {
 			this.hasNumber = false;
+			this.hadNumber = false;
 		}
 
 		if (type === 'X') {
@@ -87,6 +89,17 @@ export class Dot extends Phaser.Image {
 		if (this.hasInfo && !this.everVisited) {
 			this.qm.rotation = Math.sin(game.time.now/200)/6;
 		}
+
+		if (this.hadNumber) {
+			let dt = game.time.elapsedMS / 1000;
+			// this.timer = Math.min(1.5, this.timer + dt);
+			// this.number.x = this.x + (this.timer/1.5) * (1200 - this.x);
+			// this.number.y = this.y + (Math.pow((this.timer/1.5)-.4, 2)*6-1) * (700 - this.y);
+			this.number.vy += 1000*dt;
+			this.number.x += this.number.vx*dt;
+			this.number.y += this.number.vy*dt;
+			this.number.rotation += 2*dt;
+		}
 	}
 
 	markVisited() {
@@ -106,11 +119,18 @@ export class Dot extends Phaser.Image {
 	defeatNumber() {
 		this.number.animations.play('die');
 		this.hasNumber = false;
+		this.hadNumber = true;
+		this.number.vx = (1200-this.x)/3;
+		this.number.vy = -1000;
 	}
 
 	reviveNumber() {
 		this.number.animations.play('idle');
 		this.hasNumber = true;
+		this.hadNumber = false;
+		this.number.x = this.x;
+		this.number.y = this.y;
+		this.number.rotation = 0;
 	}
 
 	unlock() {
