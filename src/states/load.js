@@ -25,8 +25,9 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('three', 'img/three.png', 100, 100);
 		game.load.spritesheet('door', 'img/door.png', 130, 130);
 		game.load.spritesheet('charge', 'img/charge.png', 60, 60);
-		game.load.spritesheet('starburst', 'img/starburst.png', 130, 130);
+		game.load.spritesheet('starburst', 'img/starburst2.png', 150, 150);
 		game.load.spritesheet('arrow', 'img/menu/level-arrow.png', 110, 110);
+		game.load.spritesheet('hint-1', 'img/hint-1.png', 250, 150);
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('pencil', 'img/pencil.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
@@ -60,39 +61,6 @@ export class LoadState extends Phaser.State {
 				}
 			};
 		}
-
-		game.data = {
-			levels: {
-				'1-1': {
-					unlocked: true,
-					completed: true
-				},
-				'1-2': {
-					unlocked: true,
-					completed: true
-				},
-				'1-3': {
-					unlocked: true,
-					completed: true
-				},
-				'1-4': {
-					unlocked: true,
-					completed: true
-				},
-				'1-5': {
-					unlocked: true,
-					completed: true
-				},
-				'2-1': {
-					unlocked: true,
-					completed: false
-				},
-				'X-1': {
-					unlocked: true,
-					completed: false
-				}
-			}
-		};
 
 		// load levels
 		game.tutorial = tutorial;

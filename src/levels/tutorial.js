@@ -10,8 +10,8 @@ export const tutorial = [
         ],
         info: {
             n: "CLICK to move!",
-            a: "You may never retrace your own path, but you can\nrevisit dots you've been to before.",
-            b: "If you ever get stuck, you can press UNDO to go\nback one step."
+            a: "You can't retrace your own path, but you can\nrevisit dots you've been to before.",
+            b: "If you ever get stuck, you can press           to go\nback one step."
         }
     },
     {
@@ -39,8 +39,21 @@ export const tutorial = [
             '           ',
         ],
         info: {
-            a: "NUMBERS are perfectly harmless, but you need to\nerase them to progress.",
-            b: "To erase a number, you need to build up a charge\nequal to it, then touch it."
+            a: "In each room, you need to CAPTURE all of the\nnumbers in it, then get to the exit.",
+            b: "To capture a number, first build up a charge\nequal to it, then touch it."
+        }
+    },
+    {
+        layout: [
+            '           ',
+            ' Na0b0     ',
+            '   00000   ',
+            '   00010X  ',
+            '   00000   ',
+            '           ',
+        ],
+        info: {
+            a: "To build up a charge of more than 1, revisit multiple dots in a row."
         }
     }
 ];
