@@ -11,7 +11,7 @@ export const world3b = {
             '           ',
             '           '
         ],
-        unlocks: []
+        unlocks: ['3-2b']
     },
     '3-2b': {
         x: 4140,
