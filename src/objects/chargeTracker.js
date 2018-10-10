@@ -15,19 +15,19 @@ export class ChargeTracker extends Phaser.Sprite {
 
 		this.animations.add(
 			'appear',
-			[14, 13, 12, 11, 10, 9, 8, 0],
+			[14, 13, 12, 11, 10, 9, 8, 7, 6, 5],
 			30, false	
 		);
 
 		this.animations.add(
 			'disappear',
-			[8, 9, 10, 11, 12, 13, 14, 15],
+			[6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
 			30, false
 		);
 
 		this.animations.add(
 			'pulse',
-			[7, 6, 5, 4, 3, 2, 1, 0],
+			[0, 1, 2, 3, 4, 5],
 			20, false
 		);
 
@@ -38,14 +38,14 @@ export class ChargeTracker extends Phaser.Sprite {
 		if (this.charge > 0) {
 			this.charge = 0;
 			this.animations.play('disappear');
-			game.add.tween(this.number.scale).to({x: 0, y: 0}, 200).start();
+			game.add.tween(this.number.scale).to({x: 0, y: 0}, 250).start();
 		}
 	}
 
 	gainCharge() {
 		if (this.charge === 0) {
 			this.animations.play('appear');
-			game.add.tween(this.number.scale).to({x: 1, y: 1}, 200).start();
+			game.add.tween(this.number.scale).to({x: 1, y: 1}, 250).start();
 		} else {
 			this.animations.play('pulse');
 		}
