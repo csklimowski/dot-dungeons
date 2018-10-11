@@ -1,10 +1,10 @@
 import game from '../game';
 import { world1 } from '../levels/world1';
-import { world1b } from '../levels/world1b';
+import { worldx } from '../levels/worldx';
 import { world2 } from '../levels/world2';
-import { world2b } from '../levels/world2b';
+import { worldy } from '../levels/worldy';
 import { world3 } from '../levels/world3';
-import { world3b } from '../levels/world3b';
+import { worldz } from '../levels/worldz';
 import { tutorial } from '../levels/tutorial';
 import { Curtain } from '../objects/curtain';
 import { InfoBox } from '../objects/infoBox';
@@ -65,7 +65,7 @@ export class LoadState extends Phaser.State {
 		// load levels
 		game.tutorial = tutorial;
 		game.levels = [];
-		Object.assign(game.levels, world1, world1b, world2, world2b, world3, world3b);
+		Object.assign(game.levels, world1, worldx, world2, worldy, world3, worldz);
 
 		// import save data
 		for (let levelName in game.levels) {

@@ -1,5 +1,5 @@
-export const world2b = {
-    '2-1b': {
+export const worldy = {
+    'Y-1': {
         x: 2660,
         y: 820,
         layout: [
@@ -11,9 +11,9 @@ export const world2b = {
             '          ',
             '          '
         ],
-        unlocks: ['2-2b']
+        unlocks: ['Y-2']
     },
-    '2-2b': {
+    'Y-2': {
         x: 2860,
         y: 820,
         layout: [
@@ -25,9 +25,9 @@ export const world2b = {
             '   N00    ',
             '          '
         ],
-        unlocks: ['2-3b']
+        unlocks: ['Y-3']
     },
-    '2-3b': {
+    'Y-3': {
         x: 3060,
         y: 820,
         layout: [
@@ -38,9 +38,9 @@ export const world2b = {
             '   02020   ',
             '           '
         ],
-        unlocks: ['2-4b']
+        unlocks: ['Y-4']
     },
-    '2-4b': {
+    'Y-4': {
         x: 3260,
         y: 820,
         layout: [
@@ -52,9 +52,9 @@ export const world2b = {
             '     2     ',
             '           '
         ],
-        unlocks: ['2-5b']
+        unlocks: ['Y-5']
     },
-    '2-5b': {
+    'Y-5': {
         x: 3460,
         y: 820,
         layout: [

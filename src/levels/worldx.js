@@ -1,4 +1,4 @@
-export const world1b = {
+export const worldx = {
     'X-1': {
         x: 2330,
         y: 890,

@@ -66,6 +66,6 @@ export const world2 = {
             '          ',
             '          '
         ],
-        unlocks: ['2-1b', '3-1']
+        unlocks: ['Y-1', '3-1']
     }
 };
