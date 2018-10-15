@@ -1,7 +1,7 @@
 export const world2 = {
     '2-1': {
-        x: 2760,
-        y: 500,
+        x: 2670,
+        y: 540,
         layout: [
             '          ',
             '          ',
@@ -14,8 +14,8 @@ export const world2 = {
         unlocks: ['2-2']
     },
     '2-2': {
-        x: 2860,
-        y: 100,
+        x: 2930,
+        y: 500,
         layout: [
             '          ',
             '    00X   ',
@@ -28,8 +28,8 @@ export const world2 = {
         unlocks: ['2-3']
     },
     '2-3': {
-        x: 3060,
-        y: 100,
+        x: 3100,
+        y: 320,
         layout: [
             '           ',
             '    N X    ',
@@ -41,8 +41,8 @@ export const world2 = {
         unlocks: ['2-4']
     },
     '2-4': {
-        x: 3260,
-        y: 100,
+        x: 3370,
+        y: 300,
         layout: [
             '           ',
             '     2     ',
@@ -55,8 +55,8 @@ export const world2 = {
         unlocks: ['2-5']
     },
     '2-5': {
-        x: 3460,
-        y: 100,
+        x: 3610,
+        y: 430,
         layout: [
             '          ',
             '          ',

@@ -1,7 +1,7 @@
 export const worldy = {
     'Y-1': {
-        x: 2660,
-        y: 820,
+        x: 3610,
+        y: 1010,
         layout: [
             '          ',
             '          ',
@@ -14,8 +14,8 @@ export const worldy = {
         unlocks: ['Y-2']
     },
     'Y-2': {
-        x: 2860,
-        y: 820,
+        x: 3370,
+        y: 1140,
         layout: [
             '          ',
             '    00X   ',
@@ -28,8 +28,8 @@ export const worldy = {
         unlocks: ['Y-3']
     },
     'Y-3': {
-        x: 3060,
-        y: 820,
+        x: 3100,
+        y: 1120,
         layout: [
             '           ',
             '    N X    ',
@@ -41,8 +41,8 @@ export const worldy = {
         unlocks: ['Y-4']
     },
     'Y-4': {
-        x: 3260,
-        y: 820,
+        x: 2930,
+        y: 940,
         layout: [
             '           ',
             '     2     ',
@@ -55,8 +55,8 @@ export const worldy = {
         unlocks: ['Y-5']
     },
     'Y-5': {
-        x: 3460,
-        y: 820,
+        x: 2670,
+        y: 900,
         layout: [
             '          ',
             '          ',
