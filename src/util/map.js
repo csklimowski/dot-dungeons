@@ -37,7 +37,6 @@ export function buildLevelMap(source) {
         }
         map.push(row);
     }
-    console.log(map.remaining);
     return map;
 }
 
@@ -126,7 +125,7 @@ export function buildProceduralMap(difficulty) {
         }
     } while (error);
 
-    console.log(tries);
+    console.log('It took ' + tries + ' attempts to generate this level.');
     
     return {
         layout: source
