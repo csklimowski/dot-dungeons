@@ -44,6 +44,8 @@ export class LoadState extends Phaser.State {
 		game.load.image('worldx', 'img/menu/worldx.png');
 		game.load.image('world2', 'img/menu/world2.png');
 		game.load.image('worldy', 'img/menu/worldy.png');
+		game.load.image('world3', 'img/menu/world3.png');
+		game.load.image('worldz', 'img/menu/worldz.png');
 
 		game.load.bitmapFont('handwriting', 'font/hw5.png', 'font/hw5.fnt');
 	}

@@ -1,7 +1,7 @@
 export const world3 = {
     '3-1': {
-        x: 3940,
-        y: 100,
+        x: 3960,
+        y: 430,
         layout: [
             '           ',
             '           ',
@@ -14,8 +14,8 @@ export const world3 = {
         unlocks: ['3-2']
     },
     '3-2': {
-        x: 4140,
-        y: 100,
+        x: 4185,
+        y: 290,
         layout: [
             '          ',
             '   N03X   ',
@@ -28,8 +28,8 @@ export const world3 = {
         unlocks: ['3-3']
     },
     '3-3': {
-        x: 4340,
-        y: 100,
+        x: 4510,
+        y: 265,
         layout: [
             '          ',
             '          ',
@@ -42,8 +42,8 @@ export const world3 = {
         unlocks: ['3-4']
     },
     '3-4': {
-        x: 4540,
-        y: 100,
+        x: 4765,
+        y: 385,
         layout: [
             '           ',
             '   00300   ',
@@ -56,8 +56,8 @@ export const world3 = {
         unlocks: ['3-5']
     },
     '3-5': {
-        x: 4740,
-        y: 100,
+        x: 4850,
+        y: 585,
         layout: [
             '           ',
             '           ',

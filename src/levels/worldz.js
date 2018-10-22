@@ -1,7 +1,7 @@
 export const worldz = {
     'Z-1': {
-        x: 3940,
-        y: 820,
+        x: 4850,
+        y: 855,
         layout: [
             '           ',
             '           ',
@@ -14,8 +14,8 @@ export const worldz = {
         unlocks: ['Z-2']
     },
     'Z-2': {
-        x: 4140,
-        y: 820,
+        x: 4765,
+        y: 1055,
         layout: [
             '          ',
             '   N03X   ',
@@ -28,8 +28,8 @@ export const worldz = {
         unlocks: ['Z-3']
     },
     'Z-3': {
-        x: 4340,
-        y: 820,
+        x: 4510,
+        y: 1175,
         layout: [
             '          ',
             '          ',
@@ -42,8 +42,8 @@ export const worldz = {
         unlocks: ['Z-4']
     },
     'Z-4': {
-        x: 4540,
-        y: 820,
+        x: 4185,
+        y: 1150,
         layout: [
             '          ',
             '          ',
@@ -55,8 +55,8 @@ export const worldz = {
         unlocks: ['Z-5']
     },
     'Z-5': {
-        x: 4540,
-        y: 820,
+        x: 3960,
+        y: 1010,
         layout: [
             '          ',
             '          ',

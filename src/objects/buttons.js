@@ -59,7 +59,6 @@ export class LevelButton extends Phaser.Sprite {
 			this.animations.play('complete');
 			game.justCompleted = null;
 		}
-		this.input.enableDrag();
 	}
 
 	unlockNext() {
