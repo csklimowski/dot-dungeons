@@ -17,7 +17,7 @@ export const tutorial = [
     {
         layout: [
             '           ',
-            '   b000000 ',
+            '   b0000c0 ',
             '   0   000 ',
             ' N0a00 000 ',
             '   0 0 000 ',
@@ -26,7 +26,8 @@ export const tutorial = [
         ],
         info: {
             a: "Revisiting dots that you've been to before builds\nup CHARGE.",
-            b: "However, if you visit a dot for the first time,\nyour charge goes away."
+            b: "But if you visit a dot for the first time, your\ncharge goes away.",
+            c: "So, to build up a charge of more than 1, you need\nto revisit multiple dots in a row."
         }
     },
     {
@@ -39,21 +40,8 @@ export const tutorial = [
             '           ',
         ],
         info: {
-            a: "In each room, you need to CAPTURE all of the\nnumbers in it, then get to the exit.",
+            a: "In each room, you need to CAPTURE all of the\nnumbers, then get to the exit.",
             b: "To capture a number, first build up a charge\nequal to it, then touch it."
-        }
-    },
-    {
-        layout: [
-            '           ',
-            ' Na0b0     ',
-            '   00000   ',
-            '   00010X  ',
-            '   00000   ',
-            '           ',
-        ],
-        info: {
-            a: "To build up a charge of more than 1, revisit multiple dots in a row."
         }
     }
 ];
