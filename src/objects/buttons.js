@@ -82,6 +82,10 @@ export class LevelButton extends Phaser.Sprite {
 				arrow.animations.play('enable');
 			}
 		}
+		if (this.level === '3-5') {
+			game.world3arrow.enabled = true;
+			game.world3arrow.animations.play('enable');
+		}
 	}
 }
 
