@@ -63,28 +63,36 @@ export class LevelButton extends Phaser.Sprite {
 
 	unlockNext() {
 		for (let level of game.levels[this.level].unlocks) {
-			game.levels[level].unlocked = true;
-			let button = game.levels[level].button;
-			button.enabled = true;
-			button.overFrame = 6;
-			button.outFrame = 11;
-			button.animations.play('enable');
+			if (!game.levels[level].unlocked) {
+				game.levels[level].unlocked = true;
+				let button = game.levels[level].button;
+				button.enabled = true;
+				button.overFrame = 6;
+				button.outFrame = 11;
+				button.animations.play('enable');
+			}
 		}
 		if (this.level === '1-5') {
 			for (let arrow of game.world1arrows) {
-				arrow.enabled = true;
-				arrow.animations.play('enable');
+				if (!arrow.enabled) {
+					arrow.enabled = true;
+					arrow.animations.play('enable');
+				}
 			}
 		}
 		if (this.level === '2-5') {
 			for (let arrow of game.world2arrows) {
-				arrow.enabled = true;
-				arrow.animations.play('enable');
+				if (!arrow.enabled) {
+					arrow.enabled = true;
+					arrow.animations.play('enable');
+				}
 			}
 		}
 		if (this.level === '3-5') {
-			game.world3arrow.enabled = true;
-			game.world3arrow.animations.play('enable');
+			if (!game.world3arrow.enabled) {
+				game.world3arrow.enabled = true;
+				game.world3arrow.animations.play('enable');
+			}
 		}
 	}
 }

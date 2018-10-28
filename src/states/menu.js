@@ -5,7 +5,11 @@ import { buildProceduralMap } from '../util/map';
 
 export class MenuState extends Phaser.State {
 	create() {
-		docCookies.setItem('dot_dungeons_data', JSON.stringify(game.data));
+		Cookies.set(
+			'dot_dungeons_data', 
+			JSON.stringify(game.data),
+			{expires: 365}
+		);
 		game.world.setBounds(0, 0, 7680, 1440);
 		game.stage.backgroundColor = 0xffffff;
 		this.graphics = game.add.graphics(0, 0);
@@ -16,14 +20,14 @@ export class MenuState extends Phaser.State {
 		game.camera.y = game.menuY;
 
 		game.world1arrows = [
-			new MenuArrow(2400, 420, 2560, 0, 180, game.levels['1-5'].completed),
-			new MenuArrow(2200, 630, 1280, 720, 270, game.levels['1-5'].completed)
+			new MenuArrow(2400, 420, 2560, 0, 180, game.levels['2-1'].unlocked),
+			new MenuArrow(2200, 630, 1280, 720, 270, game.levels['X-1'].unlocked)
 		];
 		game.world2arrows = [
-			new MenuArrow(3700, 290, 3840, 0, 180, game.levels['2-5'].completed),
-			new MenuArrow(3450, 580, 2560, 720, 270, game.levels['2-5'].completed)
+			new MenuArrow(3700, 290, 3840, 0, 180, game.levels['3-1'].unlocked),
+			new MenuArrow(3450, 580, 2560, 720, 270, game.levels['Y-1'].unlocked)
 		];
-		game.world3arrow = new MenuArrow(4970, 450, 3840, 720, 270, game.levels['3-5'].completed);
+		game.world3arrow = new MenuArrow(4970, 450, 3840, 720, 270, game.levels['Z-1'].unlocked);
 
 		for (let levelName in game.levels) {
 			let button = new LevelButton(levelName);

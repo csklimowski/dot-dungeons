@@ -17,7 +17,6 @@ export class LoadState extends Phaser.State {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
-		//game.load.bitmapFont('small', 'font/small.png', 'font/small.fnt');
 		game.load.spritesheet('level-button', 'img/menu/level-button.png', 70, 70);
 		game.load.spritesheet('dot', 'img/dot.png', 24, 24);
 		game.load.spritesheet('one', 'img/one.png', 100, 100);
@@ -28,6 +27,7 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('starburst', 'img/starburst2.png', 150, 150);
 		game.load.spritesheet('arrow', 'img/menu/level-arrow.png', 110, 110);
 		game.load.spritesheet('hint-1', 'img/hint-1.png', 250, 150);
+
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('pencil', 'img/pencil.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
@@ -52,7 +52,7 @@ export class LoadState extends Phaser.State {
 
 	create() {
 		// retrieve cookie
-		if (docCookies.hasItem('dot_dungeons_data')) {
+		if (Cookies.get('dot_dungeons_data')) {
 			let dataString = docCookies.getItem('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
