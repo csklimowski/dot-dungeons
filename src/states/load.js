@@ -27,6 +27,7 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('starburst', 'img/starburst2.png', 150, 150);
 		game.load.spritesheet('arrow', 'img/menu/level-arrow.png', 110, 110);
 		game.load.spritesheet('hint-1', 'img/hint-1.png', 250, 150);
+		game.load.spritesheet('hint-2', 'img/hint-2.png', 150, 150);
 
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('pencil', 'img/pencil.png');

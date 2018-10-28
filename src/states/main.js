@@ -25,6 +25,14 @@ export class MainState extends Phaser.State {
 		} else if (game.mode === 'puzzle') {
 			levelSource = game.levels[game.currentLevel];
 			levelText.text = game.currentLevel;
+			if (game.currentLevel === '2-2') {
+				let hint = game.add.sprite(523, 375, 'hint-2');
+				hint.animations.add('swish', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 
+					                          7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+											  21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
+										      34, 35, 36, 37, 38, 39], 20, true);
+				hint.animations.play('swish');
+			}
 		}
 		
 		let map = buildLevelMap(levelSource);
