@@ -31,6 +31,7 @@ export class LoadState extends Phaser.State {
 
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('pencil', 'img/pencil.png');
+		game.load.image('pen', 'img/pen.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
 		game.load.image('transition', 'img/transition.png');
 		game.load.image('random-dungeon', 'img/menu/random-dungeon.png');
@@ -54,7 +55,7 @@ export class LoadState extends Phaser.State {
 	create() {
 		// retrieve cookie
 		if (Cookies.get('dot_dungeons_data')) {
-			let dataString = docCookies.getItem('dot_dungeons_data');
+			let dataString = Cookies.get('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
 			game.data = {

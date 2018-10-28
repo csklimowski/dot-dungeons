@@ -38,13 +38,15 @@ export class MainState extends Phaser.State {
 		let map = buildLevelMap(levelSource);
 		this.graphics = game.add.graphics(0, 0);
 		this.ct = new ChargeTracker();
-		this.pencil = new Pencil(map.startX, map.startY);
+		this.pencil = new Pencil(map.startX, map.startY, game.mode === 'random');
 
-		let undo = new MenuButton(1150, 45, 'undo', this.undo, this);
 		let exit = new MenuButton(1230, 45, 'exit', function() {
 			game.infoBox.dismiss();
 			game.curtain.transition('menu');
 		}, this);
+		if (game.mode !== 'random') {
+			let undo = new MenuButton(1150, 45, 'undo', this.undo, this);
+		}
 		
 		this.path = [{
 			x: map.startX,
