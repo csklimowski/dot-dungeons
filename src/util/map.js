@@ -41,11 +41,14 @@ export function buildLevelMap(source) {
 }
 
 export function buildProceduralMap(difficulty) {
-    let maxDots = Math.min(20, 7 + difficulty);
-    let minNumbers = Math.min(15, 2 + difficulty);
+
+    let minDots = Math.min(23, 13 + 0.5*difficulty);
+    let maxDots = Math.min(25, 15 + 0.5*difficulty);
+    let minNumbers = Math.min(23, 3 + difficulty);
+    let maxNumbers = Math.min(25, 5 + difficulty);
+
     let source, error;
     let tries = 0;
-    
     do {
         tries++;
         error = false;
@@ -58,11 +61,6 @@ export function buildProceduralMap(difficulty) {
             Array(11).fill(' '),
             Array(11).fill(' ')
         ];
-
-        let forbidden = {};
-        for (let i = 1; i < 8; i++) {
-            forbidden[i] = 1 + Math.floor(Math.random()*5);
-        }
 
         let currentX = 1 + Math.floor(Math.random()*7);
         let currentY = 1 + Math.floor(Math.random()*5);
@@ -103,18 +101,19 @@ export function buildProceduralMap(difficulty) {
             currentY += nextMove.y;
     
             if (source[currentY][currentX] === ' ') {
-                if (total >= minNumbers) {
+                if (total >= minNumbers && dots >= minDots) {
                     source[currentY][currentX] = 'X';
                     break;
                 }
                 if (charge < 4) {
                     source[currentY][currentX] = '' + charge;
                     total += charge;
+                    if (charge === 3) total++;
                 } else {
                     source[currentY][currentX] = '0';
                 }
                 dots++;
-                if (dots > maxDots) {
+                if (dots > maxDots || total > maxNumbers) {
                     error = true;
                     break;
                 }
