@@ -109,7 +109,9 @@ export class MainState extends Phaser.State {
 
 		// mark as visited
 		if (dot.visited) {
-			this.ct.gainCharge();
+			if (game.room !== 0 || game.mode !== 'tutorial') {
+				this.ct.gainCharge();
+			}
 		} else {
 			if (dot.hasInfo && !dot.everVisited) map.remaining -= 1;
 			this.ct.loseCharge();
