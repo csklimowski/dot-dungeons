@@ -42,7 +42,11 @@ export class MainState extends Phaser.State {
 
 		let exit = new MenuButton(1230, 45, 'exit', function() {
 			game.infoBox.dismiss();
-			game.curtain.transition('menu');
+			if (game.mode === 'random') {
+				game.curtain.transition('results');
+			} else {
+				game.curtain.transition('menu');
+			}
 		}, this);
 		if (game.mode !== 'random') {
 			let undo = new MenuButton(1150, 45, 'undo', this.undo, this);
@@ -184,6 +188,9 @@ export class MainState extends Phaser.State {
 					if (valid) this.validMoves.push({x, y});
 				}
 			}
+		}
+		if (this.validMoves.length === 0 && game.mode === 'random') {
+			game.curtain.transition('results');
 		}
 	}
 	
