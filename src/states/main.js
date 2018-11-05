@@ -105,6 +105,15 @@ export class MainState extends Phaser.State {
 		// defeat number
 		if (dot.hasNumber) {
 			if (this.ct.charge === dot.number.value) {
+				if (game.mode === 'random') {
+					if (dot.number.value === 1) {
+						game.onesCaptured++;
+					} else if (dot.number.value === 2) {
+						game.twosCaptured++;
+					} else if (dot.number.value === 3) {
+						game.threesCaptured++;
+					}
+				}
 				map.remaining -= 1;
 				dot.defeatNumber();
 				summary.cleared = true;

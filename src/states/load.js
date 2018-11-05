@@ -69,7 +69,8 @@ export class LoadState extends Phaser.State {
 						unlocked: true,
 						completed: false
 					}
-				}
+				},
+				highScore: -1
 			};
 		}
 

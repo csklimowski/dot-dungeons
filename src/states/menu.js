@@ -51,6 +51,9 @@ export class MenuState extends Phaser.State {
 			new MenuButton(200, 400, 'random-dungeon', function() {
 				game.mode = 'random';
 				game.room = 1;
+				game.onesCaptured = 0;
+				game.twosCaptured = 0;
+				game.threesCaptured = 0;
 				game.curtain.transition('main');
 			}, this),
 
