@@ -42,6 +42,11 @@ export class LoadState extends Phaser.State {
 		game.load.image('question-mark', 'img/question-mark.png');
 		game.load.image('undo', 'img/undo.png');
 		game.load.image('exit', 'img/exit.png');
+		game.load.image('retry', 'img/menu/retry.png');
+		game.load.image('main-menu', 'img/menu/main-menu.png');
+		game.load.image('back', 'img/menu/back.png');
+		game.load.image('unlock-everything', 'img/menu/unlock-everything.png');
+		game.load.image('everything-unlocked', 'img/menu/everything-unlocked.png');
 		game.load.image('world1', 'img/menu/world1.png');
 		game.load.image('worldx', 'img/menu/worldx.png');
 		game.load.image('world2', 'img/menu/world2.png');
@@ -96,6 +101,8 @@ export class LoadState extends Phaser.State {
 		// initialize globals
 		game.menuX = 0;
 		game.menuY = 0;
+
+		game.stage.backgroundColor = 0xffffff;
 
 		game.state.start('menu');
 	}
