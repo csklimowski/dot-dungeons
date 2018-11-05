@@ -11,7 +11,6 @@ export class MenuState extends Phaser.State {
 			{expires: 365}
 		);
 		game.world.setBounds(0, 0, 7680, 1440);
-		game.stage.backgroundColor = 0xffffff;
 		this.graphics = game.add.graphics(0, 0);
 		this.buttons = game.add.group();
 		game.mode = 'puzzle';
@@ -36,7 +35,6 @@ export class MenuState extends Phaser.State {
 
 		this.scenery = [
 			game.add.image(350, 50, 'logo'),
-			game.add.image(520, 550, 'credits'),
 			game.add.image(1280, 0, 'world1'),
 			new Number(1890, 90, '1'),
 			game.add.image(1280, 720, 'worldx'),
@@ -64,6 +62,14 @@ export class MenuState extends Phaser.State {
 				game.mode = 'tutorial';
 				game.room = 0;
 				game.curtain.transition('main');
+			}, this),
+
+			new MenuButton(650, 610, 'credits', function() {
+				game.menuY = 720;
+			}, this),
+
+			new MenuButton(160, 830, 'back', function() {
+				game.menuY = 0;
 			}, this),
 
 			new MenuArrow(1400, 130, 0, 0, 0, true),	
