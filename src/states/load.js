@@ -47,6 +47,7 @@ export class LoadState extends Phaser.State {
 		game.load.image('back', 'img/menu/back.png');
 		game.load.image('unlock-everything', 'img/menu/unlock-everything.png');
 		game.load.image('everything-unlocked', 'img/menu/everything-unlocked.png');
+		game.load.image('credits-page', 'img/menu/credits-page.png');
 		game.load.image('world1', 'img/menu/world1.png');
 		game.load.image('worldx', 'img/menu/worldx.png');
 		game.load.image('world2', 'img/menu/world2.png');

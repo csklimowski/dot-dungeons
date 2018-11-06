@@ -35,6 +35,7 @@ export class MenuState extends Phaser.State {
 
 		this.scenery = [
 			game.add.image(350, 50, 'logo'),
+			game.add.image(0, 720, 'credits-page'),
 			game.add.image(1280, 0, 'world1'),
 			new Number(1890, 90, '1'),
 			game.add.image(1280, 720, 'worldx'),
@@ -84,6 +85,14 @@ export class MenuState extends Phaser.State {
 			new MenuArrow(3960, 580, 2560, 0, 0, true),
 			new MenuArrow(4650, 850, 3840, 0, 90, true),
 		]
+
+		this.everythingUnlocked = false;
+		this.unlockButton = new MenuButton(950, 1140, 'unlock-everything', function() {
+			for (let levelName in game.levels) {
+				game.data.levels[levelName].unlocked = true;
+			}
+			this.everythingUnlocked = true;
+		}, this),
 
 		game.curtain.raise();
 	}

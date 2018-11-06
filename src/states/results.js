@@ -6,7 +6,7 @@ export class ResultsState extends Phaser.State {
 	create() {
 		let score = game.room - 1;
 
-		game.add.bitmapText(420, 50, 'handwriting', 'Floors cleared: ', 80);
+		game.add.bitmapText(420, 50, 'handwriting', 'Rooms cleared: ', 80);
 		game.add.bitmapText(860, 50, 'handwriting', score + '', 80).anchor.set(1, 0);
 
 		if (score > game.data.highScore) {
