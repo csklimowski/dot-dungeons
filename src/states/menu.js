@@ -49,7 +49,7 @@ export class MenuState extends Phaser.State {
 
 
 		this.buttons = [
-			new MenuButton(200, 400, 'random-dungeon', function() {
+			new MenuButton(200, 400, 'endless-dungeon', function() {
 				game.mode = 'random';
 				game.room = 1;
 				game.onesCaptured = 0;
