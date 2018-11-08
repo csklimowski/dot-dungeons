@@ -86,13 +86,13 @@ export class MenuState extends Phaser.State {
 			new MenuArrow(4650, 850, 3840, 0, 90, true),
 		]
 
-		this.everythingUnlocked = false;
 		this.unlockButton = new MenuButton(950, 1140, 'unlock-everything', function() {
 			for (let levelName in game.levels) {
 				game.data.levels[levelName].unlocked = true;
+				game.levels[levelName].unlocked = true;
 			}
-			this.everythingUnlocked = true;
-		}, this),
+			game.curtain.transition('menu');
+		}, this);
 
 		game.curtain.raise();
 	}
