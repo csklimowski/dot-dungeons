@@ -37,6 +37,10 @@ export class MainState extends Phaser.State {
 		
 		let map = buildLevelMap(levelSource);
 		this.graphics = game.add.graphics(0, 0);
+		this.numburst = game.add.sprite(0, 0, 'numburst', 6);
+		this.numburst.animations.add('burst', [0, 1, 2, 3, 4, 5, 6], 20, false);
+		this.numburst.anchor.set(0.5);
+		this.numburst.scale.set(1);
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY, game.mode === 'random');
 
@@ -115,6 +119,9 @@ export class MainState extends Phaser.State {
 					}
 				}
 				map.remaining -= 1;
+				this.numburst.x = dot.number.x;
+				this.numburst.y = dot.number.y;
+				this.numburst.animations.play('burst');
 				dot.defeatNumber();
 				summary.cleared = true;
 			}

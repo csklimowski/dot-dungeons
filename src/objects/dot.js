@@ -1,13 +1,5 @@
 import game from '../game';
 
-/**
- * Types:
- *     0: regular dot
- *     1+: number
- *     N: entrance
- *     X: exit
- */
-
 export class Number extends Phaser.Sprite {
 	constructor(x, y, type) {
 		let idleFrames, deadFrame, value, key;
@@ -92,9 +84,6 @@ export class Dot extends Phaser.Image {
 
 		if (this.hadNumber) {
 			let dt = game.time.elapsedMS / 1000;
-			// this.timer = Math.min(1.5, this.timer + dt);
-			// this.number.x = this.x + (this.timer/1.5) * (1200 - this.x);
-			// this.number.y = this.y + (Math.pow((this.timer/1.5)-.4, 2)*6-1) * (700 - this.y);
 			this.number.vy += 1000*dt;
 			this.number.x += this.number.vx*dt;
 			this.number.y += this.number.vy*dt;
