@@ -32,7 +32,7 @@ export class LoadState extends Phaser.State {
 
 		game.load.image('paper-texture', 'img/paper-texture.png');
 		game.load.image('pencil', 'img/game/pencil.png');
-		game.load.image('pen', 'img/game/newpen.png');
+		game.load.image('pen', 'img/game/pen.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
 		game.load.image('transition', 'img/transition.png');
 		game.load.image('endless-dungeon', 'img/menu/endless-dungeon.png');
