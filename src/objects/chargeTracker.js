@@ -49,10 +49,11 @@ export class ChargeTracker extends Phaser.Sprite {
 		} else {
 			this.animations.play('pulse');
 		}
-
+		
 		this.charge++;
 		if (this.charge > 5) this.charge = 5;
 		this.number.frame = this.charge - 1;
+		game.sfx.charge[this.charge-1].play();
 	}
 
 	setCharge(charge) {

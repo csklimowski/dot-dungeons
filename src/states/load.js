@@ -14,8 +14,6 @@ export class LoadState extends Phaser.State {
 		game.add.text(game.width/2, game.height/2, 'Loading...', { font: '30px sans-serif', fill: '#ffffff', align: 'center'}).anchor.set(0.5);
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.windowConstraints.bottom = 'layout';
-        game.scale.pageAlignHorizontally = true;
-        game.scale.pageAlignVertically = true;
 
 		game.load.spritesheet('level-button', 'img/menu/level-button.png', 70, 70);
 		game.load.spritesheet('dot', 'img/game/dot.png', 24, 24);
@@ -56,10 +54,46 @@ export class LoadState extends Phaser.State {
 		game.load.image('world3', 'img/menu/world3.png');
 		game.load.image('worldz', 'img/menu/worldz.png');
 
+		game.load.audio('pen', 'sfx/pen.ogg');
+		game.load.audio('click', 'sfx/click.ogg');
+		game.load.audio('music', 'sfx/music.ogg');
+		game.load.audio('door', 'sfx/door.ogg');
+		game.load.audio('charge1', 'sfx/charge1.ogg');
+		game.load.audio('charge2', 'sfx/charge2.ogg');
+		game.load.audio('charge3', 'sfx/charge3.ogg');
+		game.load.audio('charge4', 'sfx/charge4.ogg');
+		game.load.audio('charge5', 'sfx/charge5.ogg');
+		game.load.audio('swoosh', 'sfx/swoosh.ogg');
+		game.load.audio('whack', 'sfx/whack.ogg');
+		game.load.audio('oof', 'sfx/oof.ogg');
+		game.load.audio('whack', 'sfx/whack.ogg');
+		game.load.audio('hmm', 'sfx/hmm.ogg');
+		game.load.audio('aah', 'sfx/aah.ogg');
+
 		game.load.bitmapFont('handwriting', 'font/hw5.png', 'font/hw5.fnt');
 	}
 
 	create() {
+
+		game.sfx = {
+			music: game.add.audio('music', 1, true),
+			pen: game.add.audio('pen', 1, false),
+			click: game.add.audio('click', 1.5, false),
+			door: game.add.audio('door', 1, false),
+			charge: [
+				game.add.audio('charge1', 1.5, false),
+				game.add.audio('charge2', 1.5, false),
+				game.add.audio('charge3', 1.5, false),
+				game.add.audio('charge4', 1.5, false),
+				game.add.audio('charge5', 1.5, false)
+			],
+			swoosh: game.add.audio('swoosh', 0.2, false),
+			whack: game.add.audio('whack', 0.7, false),
+			oof: game.add.audio('oof', 0.3, false),
+			aah: game.add.audio('aah', 0.3, false),
+			hmm: game.add.audio('hmm', 0.3, false)
+		};
+		
 		// retrieve cookie
 		if (Cookies.get('dot_dungeons_data')) {
 			let dataString = Cookies.get('dot_dungeons_data');
@@ -107,6 +141,7 @@ export class LoadState extends Phaser.State {
 
 		game.stage.backgroundColor = 0xffffff;
 
+		game.sfx.music.play();
 		game.state.start('menu');
 	}
 }

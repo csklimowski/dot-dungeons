@@ -106,6 +106,13 @@ export class Dot extends Phaser.Image {
 	}
 
 	defeatNumber() {
+		game.sfx.whack.play();
+		let r = Math.random();
+		if (r > 0.8) {
+			game.sfx.aah.play();
+		} else if (r > 0.6) {
+			game.sfx.oof.play();
+		}
 		this.number.animations.play('die');
 		this.hasNumber = false;
 		this.hadNumber = true;
@@ -125,6 +132,7 @@ export class Dot extends Phaser.Image {
 	unlock() {
 		if (this.locked) {
 			this.door.animations.play('unlock');
+			game.sfx.door.play();
 			this.locked = false;
 		}
 		this.locked = false;

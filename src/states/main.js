@@ -6,7 +6,6 @@ import { MenuButton } from '../objects/buttons';
 
 export class MainState extends Phaser.State {
 	create() {
-
 		let levelSource;
 		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 80);
 		if (game.mode === 'random') {
@@ -74,14 +73,16 @@ export class MainState extends Phaser.State {
 			game.infoBox.appear(map[map.startY][map.startX].info);
 		}
 
-		game.input.onDown.add(this.movePencil, this);
-
+		game.input.activePointer.leftButton.onDown.add(this.movePencil, this);
 		game.curtain.raise();
 	}
 
 	movePencil() {
+		if (game.state.current === 'menu' || game.state.current === 'results') return;
 		if (!this.validMoves.length) return;
 		if (game.input.y < 100) return;
+
+		game.sfx.pen.play();
 
 		let pencil = this.pencil;
 		let map = this.map;
@@ -216,7 +217,7 @@ export class MainState extends Phaser.State {
 		let leastDistance = Number.POSITIVE_INFINITY;
 		for (let move of this.validMoves) {
 			let newDistance = Phaser.Math.distance(
-				game.input.x, game.input.y,
+				game.input.activePointer.x, game.input.activePointer.y,
 				realX(pencil.pos.x + move.x), 
 				realY(pencil.pos.y + move.y)
 			);
@@ -235,8 +236,10 @@ export class MainState extends Phaser.State {
 		for (let i = 1; i < path.length; i++) {
 			g.lineTo(realX(path[i].x), realY(path[i].y));
 		}
-		g.lineStyle(8, 0x444444, 0.15);
-		g.lineTo(realX(pencil.next.x), realY(pencil.next.y));
+		if (game.input.activePointer.y > 100) {
+			g.lineStyle(8, 0x444444, 0.15);
+			g.lineTo(realX(pencil.next.x), realY(pencil.next.y));
+		}
 	}
 
 	undo() {
