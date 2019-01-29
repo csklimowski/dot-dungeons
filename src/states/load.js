@@ -47,7 +47,6 @@ export class LoadState extends Phaser.State {
 		game.load.image('main-menu', 'img/menu/main-menu.png');
 		game.load.image('back', 'img/menu/back.png');
 		game.load.image('unlock-everything', 'img/menu/unlock-everything.png');
-		game.load.image('everything-unlocked', 'img/menu/everything-unlocked.png');
 		game.load.image('credits-page', 'img/menu/credits-page.png');
 		game.load.image('world1', 'img/menu/world1.png');
 		game.load.image('worldx', 'img/menu/worldx.png');
@@ -69,7 +68,6 @@ export class LoadState extends Phaser.State {
 		game.load.audio('whack', 'sfx/whack.ogg');
 		game.load.audio('oof', 'sfx/oof.ogg');
 		game.load.audio('whack', 'sfx/whack.ogg');
-		game.load.audio('hmm', 'sfx/hmm.ogg');
 		game.load.audio('aah', 'sfx/aah.ogg');
 
 		game.load.bitmapFont('handwriting', 'font/hw5.png', 'font/hw5.fnt');
@@ -79,8 +77,8 @@ export class LoadState extends Phaser.State {
 
 		game.sfx = {
 			music: game.add.audio('music', 1, true),
-			pen: game.add.audio('pen', 1.5, false),
-			click: game.add.audio('click', 1.5, false),
+			pen: game.add.audio('pen', 0.8, false),
+			click: game.add.audio('click', 1.2, false),
 			door: game.add.audio('door', 1, false),
 			charge: [
 				game.add.audio('charge1', 1.5, false),
@@ -89,14 +87,12 @@ export class LoadState extends Phaser.State {
 				game.add.audio('charge4', 1.5, false),
 				game.add.audio('charge5', 1.5, false)
 			],
-			swoosh: game.add.audio('swoosh', 0.2, false),
-			whack: game.add.audio('whack', 0.7, false),
-			oof: game.add.audio('oof', 0.3, false),
-			aah: game.add.audio('aah', 0.3, false),
-			hmm: game.add.audio('hmm', 0.3, false)
+			swoosh: game.add.audio('swoosh', 0.15, false),
+			whack: game.add.audio('whack', 0.5, false),
+			oof: game.add.audio('oof', 0.15, false),
+			aah: game.add.audio('aah', 0.15, false)
 		};
 		
-		// retrieve cookie
 		if (Cookies.get('dot_dungeons_data')) {
 			let dataString = Cookies.get('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
@@ -113,12 +109,10 @@ export class LoadState extends Phaser.State {
 			};
 		}
 
-		// load levels
 		game.tutorial = tutorial;
 		game.levels = [];
 		Object.assign(game.levels, world1, worldx, world2, worldy, world3, worldz);
 
-		// import save data
 		for (let levelName in game.levels) {
 			if (!game.data.levels[levelName]) {
 				game.data.levels[levelName] = {
@@ -132,7 +126,6 @@ export class LoadState extends Phaser.State {
 			game.levels[levelName].completed = game.data.levels[levelName].completed;
 		}
 
-		// create permanent elements
 		game.soundButton = new MenuButton(1220, 45, 'volume', function() {
 			if (this.data.soundSetting === 0) {
 				this.sound.mute = true;
@@ -171,7 +164,6 @@ export class LoadState extends Phaser.State {
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
 		game.stage.addChild(game.overlay);
 
-		// initialize globals
 		game.menuX = 0;
 		game.menuY = 0;
 

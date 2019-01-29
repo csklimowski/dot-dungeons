@@ -88,13 +88,11 @@ export class MainState extends Phaser.State {
 		let pencil = this.pencil;
 		let map = this.map;
 
-		// move pencil
 		pencil.pos.x = pencil.next.x;
 		pencil.pos.y = pencil.next.y;
 		pencil.x = realX(pencil.pos.x);
 		pencil.y = realY(pencil.pos.y);
 
-		// inspect dot
 		let dot = map[pencil.pos.y][pencil.pos.x];
 		let summary = {
 			x: pencil.pos.x,
@@ -104,11 +102,9 @@ export class MainState extends Phaser.State {
 			finished: false,
 		};
 
-		// check for info box
 		if (dot.hasInfo) game.infoBox.appear(dot.info);
 		else             game.infoBox.dismiss();
 
-		// defeat number
 		if (dot.hasNumber) {
 			if (this.ct.charge === dot.number.value) {
 				if (game.mode === 'random') {
@@ -129,7 +125,6 @@ export class MainState extends Phaser.State {
 			}
 		}
 
-		// mark as visited
 		if (dot.visited) {
 			if (game.room !== 0 || game.mode !== 'tutorial') {
 				this.ct.gainCharge();
@@ -141,13 +136,11 @@ export class MainState extends Phaser.State {
 			summary.visited = true;
 		}
 
-		// unlock exit
 		if (map.remaining <= 0) {
 			this.exit.unlock();
 			summary.finished = true;
 		}
 		
-		// update charge;
 		summary.charge = this.ct.charge;
 		this.path.push(summary);
 		this.calculateValidMoves();
