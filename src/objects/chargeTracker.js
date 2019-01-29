@@ -65,7 +65,7 @@ export class ChargeTracker extends Phaser.Sprite {
 			this.frame = 15;
 		} else {
 			this.number.scale.set(1);
-			this.frame = 0;
+			this.frame = 5;
 			this.number.frame = charge - 1;
 		}
 	}
