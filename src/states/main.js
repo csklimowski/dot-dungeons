@@ -54,6 +54,7 @@ export class MainState extends Phaser.State {
 		if (game.mode !== 'random') {
 			let undo = new MenuButton(1150, 45, 'undo', this.undo, this);
 		}
+		game.soundButton.x = 1060;
 		
 		this.path = [{
 			x: map.startX,

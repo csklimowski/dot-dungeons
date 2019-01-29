@@ -8,6 +8,7 @@ import { worldz } from '../levels/worldz';
 import { tutorial } from '../levels/tutorial';
 import { Curtain } from '../objects/curtain';
 import { InfoBox } from '../objects/infoBox';
+import { MenuButton } from '../objects/buttons';
 
 export class LoadState extends Phaser.State {
 	preload() {
@@ -27,14 +28,15 @@ export class LoadState extends Phaser.State {
 		game.load.spritesheet('arrow', 'img/menu/level-arrow.png', 110, 110);
 		game.load.spritesheet('hint-1', 'img/game/hint-1.png', 250, 150);
 		game.load.spritesheet('hint-2', 'img/game/hint-2.png', 150, 150);
+		game.load.spritesheet('volume', 'img/volume.png', 76, 72);
 
+		game.load.image('logo', 'img/logo.png');
 		game.load.image('paper-texture', 'img/paper-texture.png');
+		game.load.image('transition', 'img/transition.png');
 		game.load.image('pencil', 'img/game/pencil.png');
 		game.load.image('pen', 'img/game/pen.png');
 		game.load.image('puzzles', 'img/menu/puzzles.png');
-		game.load.image('transition', 'img/transition.png');
 		game.load.image('endless-dungeon', 'img/menu/endless-dungeon.png');
-		game.load.image('logo', 'img/menu/logo.png');
 		game.load.image('how-to-play', 'img/menu/how-to-play.png');
 		game.load.image('credits', 'img/menu/credits.png');
 		game.load.image('info-box', 'img/game/info-box.png');
@@ -77,7 +79,7 @@ export class LoadState extends Phaser.State {
 
 		game.sfx = {
 			music: game.add.audio('music', 1, true),
-			pen: game.add.audio('pen', 1, false),
+			pen: game.add.audio('pen', 1.5, false),
 			click: game.add.audio('click', 1.5, false),
 			door: game.add.audio('door', 1, false),
 			charge: [
@@ -106,7 +108,8 @@ export class LoadState extends Phaser.State {
 						completed: false
 					}
 				},
-				highScore: -1
+				highScore: -1,
+				soundSetting: 0
 			};
 		}
 
@@ -130,6 +133,39 @@ export class LoadState extends Phaser.State {
 		}
 
 		// create permanent elements
+		game.soundButton = new MenuButton(1220, 45, 'volume', function() {
+			if (this.data.soundSetting === 0) {
+				this.sound.mute = true;
+				this.sfx.music.stop();
+				this.data.soundSetting = 1;
+				this.soundButton.frame = 1;
+			} else if (this.data.soundSetting === 1) {
+				this.sound.mute = false;
+				this.data.soundSetting = 2;
+				this.soundButton.frame = 2;
+			} else if (this.data.soundSetting === 2) {
+				this.sfx.music.play();
+				this.data.soundSetting = 0;
+				this.soundButton.frame = 0;
+			}
+			Cookies.set(
+				'dot_dungeons_data', 
+				JSON.stringify(game.data),
+				{expires: 365}
+			);
+		}, game);
+
+		if (game.data.soundSetting === 0) {
+			game.sfx.music.play();
+			game.soundButton.frame = 0;
+		} else if (game.data.soundSetting === 1) {
+			game.sound.mute = true;
+			game.soundButton.frame = 1;
+		} else if (game.data.soundSetting === 2) {
+			game.soundButton.frame = 2;
+		}
+
+		game.stage.addChild(game.soundButton);
 		game.infoBox = new InfoBox();
 		game.curtain = new Curtain();
 		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
@@ -141,7 +177,6 @@ export class LoadState extends Phaser.State {
 
 		game.stage.backgroundColor = 0xffffff;
 
-		game.sfx.music.play();
 		game.state.start('menu');
 	}
 }

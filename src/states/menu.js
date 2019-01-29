@@ -94,6 +94,8 @@ export class MenuState extends Phaser.State {
 			game.curtain.transition('menu');
 		}, this);
 
+		game.soundButton.x = 1220;
+
 		game.curtain.raise();
 	}
 
