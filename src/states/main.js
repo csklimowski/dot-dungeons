@@ -73,15 +73,24 @@ export class MainState extends Phaser.State {
 		if (map[map.startY][map.startX].hasInfo) {
 			game.infoBox.appear(map[map.startY][map.startX].info);
 		}
+		this.justPaused = false;
 
 		game.input.activePointer.leftButton.onDown.add(this.movePencil, this);
 		game.curtain.raise();
+	}
+
+	paused() {
+		this.justPaused = true;
 	}
 
 	movePencil() {
 		if (game.state.current === 'menu' || game.state.current === 'results') return;
 		if (!this.validMoves.length) return;
 		if (game.input.y < 100) return;
+		if (this.justPaused) {
+			this.justPaused = false;
+			return;
+		}
 
 		game.sfx.pen.play();
 
