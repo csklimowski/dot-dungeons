@@ -1,4 +1,4 @@
-# dot-dungeons
+# Dot Dungeons
 
 A game about connecting dots in order to make numbers go away.
 
