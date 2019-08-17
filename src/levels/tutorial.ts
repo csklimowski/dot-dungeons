@@ -9,7 +9,7 @@ export const tutorial = [
             '           '
         ],
         info: {
-            n: "CLICK to move!",
+            n: "TOUCH and RELEASE to move!",
             a: "You can't retrace your own path, but you can\nrevisit dots you've been to before.",
             b: "If you ever get stuck, you can press           to go\nback one step."
         }

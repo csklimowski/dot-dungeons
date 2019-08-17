@@ -31,12 +31,6 @@ export class LevelButton extends Phaser.Sprite {
 		}
 
 		this.frame = this.outFrame;
-		this.events.onInputOver.add(function() {
-			this.frame = this.overFrame;
-		}, this);
-		this.events.onInputOut.add(function() {
-			this.frame = this.outFrame;
-		}, this);
 		this.events.onInputDown.add(function() {
 			game.sfx.click.play();
 			this.frame = 12;
@@ -124,22 +118,14 @@ export class MenuButton extends Phaser.Sprite {
 		if (onDown) {
 			this.events.onInputDown.add(function() {
 				game.sfx.click.play();
-				this.scale.set(1);
+				this.scale.set(1.1);
 				this.onDown.call(onDownContext);
 			}, this);
 		}
-
+		
 		this.events.onInputUp.add(function() {
-			this.scale.set(1.0);
-			game.sfx.click.play();
-		}, this);
-
-		this.events.onInputOver.add(function() {
-			this.scale.set(1.1);
-		}, this);
-	
-		this.events.onInputOut.add(function() {
 			this.scale.set(1);
+			game.sfx.click.play();
 		}, this);
 	}
 }

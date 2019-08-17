@@ -54,6 +54,7 @@ export class MainState extends Phaser.State {
 		this.numburst.scale.set(1);
 		this.ct = new ChargeTracker();
 		this.pencil = new Pencil(map.startX, map.startY, game.mode === 'random');
+		this.fingerDown = false;
 
 		let exit = new MenuButton(1230, 45, 'exit', function() {
 			game.infoBox.dismiss();
@@ -88,6 +89,8 @@ export class MainState extends Phaser.State {
 		this.justPaused = false;
 
 		game.input.activePointer.leftButton.onDown.add(this.movePencil, this);
+		game.input.onDown.add(this.onTouch, this);
+		game.input.onUp.add(this.movePencil, this);
 		game.curtain.raise();
 	}
 
@@ -95,7 +98,14 @@ export class MainState extends Phaser.State {
 		this.justPaused = true;
 	}
 
+	onTouch() {
+		this.fingerDown = true;
+	}
+
 	movePencil() {
+		if (!this.fingerDown) return;
+		this.fingerDown = false;
+		
 		if (game.state.current === 'menu' || game.state.current === 'results') return;
 		if (!this.validMoves.length) return;
 		if (game.input.y < 100) return;
@@ -230,17 +240,19 @@ export class MainState extends Phaser.State {
 	update() {
 		let pencil = this.pencil;
 		
-		let leastDistance = Number.POSITIVE_INFINITY;
-		for (let move of this.validMoves) {
-			let newDistance = Phaser.Math.distance(
-				game.input.activePointer.x, game.input.activePointer.y,
-				realX(pencil.pos.x + move.x), 
-				realY(pencil.pos.y + move.y)
-			);
-			if (newDistance < leastDistance) {
-				pencil.next.x = pencil.pos.x + move.x;
-				pencil.next.y = pencil.pos.y + move.y;
-				leastDistance = newDistance;
+		if (this.fingerDown) {
+			let leastDistance = Number.POSITIVE_INFINITY;
+			for (let move of this.validMoves) {
+				let newDistance = Phaser.Math.distance(
+					game.input.activePointer.x, game.input.activePointer.y,
+					realX(pencil.pos.x + move.x), 
+					realY(pencil.pos.y + move.y)
+				);
+				if (newDistance < leastDistance) {
+					pencil.next.x = pencil.pos.x + move.x;
+					pencil.next.y = pencil.pos.y + move.y;
+					leastDistance = newDistance;
+				}
 			}
 		}
 		
@@ -252,7 +264,7 @@ export class MainState extends Phaser.State {
 		for (let i = 1; i < path.length; i++) {
 			g.lineTo(realX(path[i].x), realY(path[i].y));
 		}
-		if (game.input.activePointer.y > 100) {
+		if (this.fingerDown && game.input.activePointer.y > 100) {
 			g.lineStyle(8, 0x444444, 0.15);
 			g.lineTo(realX(pencil.next.x), realY(pencil.next.y));
 		}
