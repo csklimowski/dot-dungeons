@@ -1,6 +1,11 @@
 import game from '../game';
 
 export class ChargeTracker extends Phaser.Sprite {
+
+	charge: number;
+	number: Phaser.Sprite;
+	numberCopy: Phaser.Sprite;
+
 	constructor() {
 		super(game, game.width/2, 80, 'starburst', 15);
 		game.add.existing(this);

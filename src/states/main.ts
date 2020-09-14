@@ -3,8 +3,20 @@ import { buildLevelMap, buildProceduralMap, realX, realY } from '../util/map';
 import { Pencil } from '../objects/pencil';
 import { ChargeTracker } from '../objects/chargeTracker';
 import { MenuButton } from '../objects/buttons';
+import { Map } from '../util/map';
 
 export class MainState extends Phaser.State {
+
+	graphics: Phaser.Graphics;
+	numburst: Phaser.Sprite;
+	ct: ChargeTracker;
+	pencil: Pencil;
+	path: any[];
+	exit: any;
+	map: Map;
+	justPaused: boolean;
+	validMoves: any[];
+
 	create() {
 		let levelSource;
 		let levelText = game.add.bitmapText(15, 0, 'handwriting', '', 80);
@@ -109,6 +121,7 @@ export class MainState extends Phaser.State {
 			cleared: false,
 			visited: false,
 			finished: false,
+			charge: null,
 		};
 
 		if (dot.hasInfo) game.infoBox.appear(dot.info);

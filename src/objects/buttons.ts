@@ -1,6 +1,13 @@
 import game from '../game';
 
 export class LevelButton extends Phaser.Sprite {
+
+	level: string;
+	enabled: boolean;
+	overFrame: number;
+	outFrame: number;
+
+
 	constructor(level) {
 		let levelInfo = game.levels[level];
 		super(game, levelInfo.x, levelInfo.y, 'level-button');
@@ -100,7 +107,12 @@ export class LevelButton extends Phaser.Sprite {
 }
 
 export class MenuButton extends Phaser.Sprite {
-	constructor(x, y, image, onDown, onDownContext) {
+
+	targetScale: number;
+	onDown: () => void;
+	onDownContext: any;
+
+	constructor(x, y, image, onDown?, onDownContext?) {
 		super(game, x, y, image);
 		game.add.existing(this);
 		this.anchor.set(0.5);
@@ -133,6 +145,11 @@ export class MenuButton extends Phaser.Sprite {
 }
 
 export class MenuArrow extends MenuButton {
+
+	menuX: number;
+	menuY: number;
+	enabled: boolean;
+
 	constructor(x, y, menuX, menuY, angle, enabled) {
 		super(x, y, 'arrow');
 		

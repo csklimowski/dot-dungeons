@@ -1,18 +1,22 @@
 import game from '../game';
 import { MenuButton, LevelButton, MenuArrow } from '../objects/buttons';
 import { Number } from '../objects/dot';
-import { buildProceduralMap } from '../util/map';
 
 export class MenuState extends Phaser.State {
+
+	graphics: Phaser.Graphics;
+	buttons: any[];
+	scenery: any[];
+	unlockButton: MenuButton;
+
 	create() {
-		Cookies.set(
-			'dot_dungeons_data', 
-			JSON.stringify(game.data),
-			{expires: 365}
+		localStorage.setItem(
+			'dot_dungeons_data',
+			JSON.stringify(game.data)
 		);
+		
 		game.world.setBounds(0, 0, 7680, 1440);
 		this.graphics = game.add.graphics(0, 0);
-		this.buttons = game.add.group();
 		game.mode = 'puzzle';
 
 		game.camera.x = game.menuX;

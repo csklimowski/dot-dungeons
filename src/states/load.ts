@@ -74,7 +74,6 @@ export class LoadState extends Phaser.State {
 	}
 
 	create() {
-
 		game.sfx = {
 			music: game.add.audio('music', 1, true),
 			pen: game.add.audio('pen', 0.8, false),
@@ -93,8 +92,8 @@ export class LoadState extends Phaser.State {
 			aah: game.add.audio('aah', 0.15, false)
 		};
 		
-		if (Cookies.get('dot_dungeons_data')) {
-			let dataString = Cookies.get('dot_dungeons_data');
+		if (localStorage.getItem('dot_dungeons_data')) {
+			let dataString = localStorage.getItem('dot_dungeons_data');
 			game.data = JSON.parse(dataString);
 		} else {
 			game.data = {
@@ -110,8 +109,7 @@ export class LoadState extends Phaser.State {
 		}
 
 		game.tutorial = tutorial;
-		game.levels = [];
-		Object.assign(game.levels, world1, worldx, world2, worldy, world3, worldz);
+		game.levels = {...world1, ...worldx, ...world2, ...worldy, ...world3, ...worldz};
 
 		for (let levelName in game.levels) {
 			if (!game.data.levels[levelName]) {
@@ -141,10 +139,10 @@ export class LoadState extends Phaser.State {
 				this.data.soundSetting = 0;
 				this.soundButton.frame = 0;
 			}
-			Cookies.set(
+
+			localStorage.setItem(
 				'dot_dungeons_data', 
-				JSON.stringify(game.data),
-				{expires: 365}
+				JSON.stringify(game.data)
 			);
 		}, game);
 
@@ -161,7 +159,7 @@ export class LoadState extends Phaser.State {
 		game.stage.addChild(game.soundButton);
 		game.infoBox = new InfoBox();
 		game.curtain = new Curtain();
-		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture');
+		game.overlay = game.make.tileSprite(0, 0, 7680, 1440, 'paper-texture', 0);
 		game.stage.addChild(game.overlay);
 
 		game.menuX = 0;

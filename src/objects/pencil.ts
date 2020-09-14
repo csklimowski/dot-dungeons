@@ -2,6 +2,11 @@ import game from '../game';
 import { buildLevelMap, realX, realY } from '../util/map';
 
 export class Pencil extends Phaser.Image {
+
+	charge: number;
+	pos: any;
+	next: any;
+
 	constructor(x, y, isPen) {
 		if (isPen) super(game, realX(x), realY(y), 'pen');
 		else       super(game, realX(x), realY(y), 'pencil');

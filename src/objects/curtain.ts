@@ -1,6 +1,10 @@
 import game from '../game';
 
 export class Curtain extends Phaser.Image {
+
+    falling: boolean;
+    newState: string;
+
     constructor() {
         super(game, game.width/2, 0, 'transition');
         game.stage.addChild(this);

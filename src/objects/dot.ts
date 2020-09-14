@@ -1,6 +1,11 @@
 import game from '../game';
 
 export class Number extends Phaser.Sprite {
+
+	value: number;
+	vx: number;
+	vy: number;
+
 	constructor(x, y, type) {
 		let idleFrames, deadFrame, value, key;
 		if (type === '1') {
@@ -40,6 +45,18 @@ export class Number extends Phaser.Sprite {
 }
 
 export class Dot extends Phaser.Image {
+
+	hasNumber: boolean;
+	visited: boolean;
+	hadNumber: boolean;
+	number: Number;
+	door: Phaser.Sprite;
+	locked: boolean;
+	qm: Phaser.Sprite;
+	hasInfo: boolean;
+	everVisited: boolean;
+	info: string;
+
 	constructor(x, y, type) {
 		super(game, x, y, 'dot');
 		game.add.existing(this);

@@ -1,6 +1,11 @@
 import game from '../game';
 
 export class InfoBox extends Phaser.Image {
+
+    text: Phaser.BitmapText;
+    targetY: number;
+    undoIcon: Phaser.Image;
+
 	constructor() {
 		super(game, 100, game.height, 'info-box');
         game.stage.addChild(this);

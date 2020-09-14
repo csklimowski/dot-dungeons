@@ -1,12 +1,18 @@
-import game from '../game';
-
 import { Dot } from '../objects/dot';
 
 export function realX(x) { return 150 + 100*x; }
 export function realY(y) { return 100 + 100*y; }
 
-export function buildLevelMap(source) {
-    let map = [];
+export interface Map extends Array<Array<Dot>> {
+    remaining?: number;
+    startX?: number;
+    startY?: number;
+    endX?: number;
+    endY?: number;
+}
+
+export function buildLevelMap(source): Map {
+    let map: Map = [];
     map.remaining = 0;
 
     let layout = source.layout;
@@ -49,17 +55,18 @@ export function buildProceduralMap(difficulty) {
 
     let source, error;
     let tries = 0;
+
     do {
         tries++;
         error = false;
         source = [
-            Array(11).fill(' '),
-            Array(11).fill(' '),
-            Array(11).fill(' '),
-            Array(11).fill(' '),
-            Array(11).fill(' '),
-            Array(11).fill(' '),
-            Array(11).fill(' ')
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
         ];
 
         let currentX = 1 + Math.floor(Math.random()*7);

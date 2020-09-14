@@ -3,6 +3,10 @@ import { MenuButton } from '../objects/buttons';
 import { Number } from '../objects/dot';
 
 export class ResultsState extends Phaser.State {
+
+	highScoreText: Phaser.BitmapText;
+	newHighScore: boolean;
+
 	create() {
 		let score = game.room - 1;
 
@@ -49,7 +53,7 @@ export class ResultsState extends Phaser.State {
 	update() {
 		if (this.newHighScore) {
 			let scale = this.highScoreText.scale.x;
-			this.highScoreText.scale.set(1 + 0.2*Math.sin(0.005*game.time.now));
+			this.highScoreText.scale.set(1 + 0.2*Math.sin(0.005*game.time.now), null);
 		}
 	}
 }
