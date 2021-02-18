@@ -14,7 +14,9 @@ export class LoadState extends Phaser.State {
 	preload() {
 		game.add.text(game.width/2, game.height/2, 'Loading...', { font: '30px sans-serif', fill: '#ffffff', align: 'center'}).anchor.set(0.5);
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        game.scale.windowConstraints.bottom = 'layout';
+		game.scale.windowConstraints.bottom = 'layout';
+		game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
 
 		game.load.spritesheet('level-button', 'img/menu/level-button.png', 70, 70);
 		game.load.spritesheet('dot', 'img/game/dot.png', 24, 24);

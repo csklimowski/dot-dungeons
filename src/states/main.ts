@@ -16,6 +16,7 @@ export class MainState extends Phaser.State {
 	map: Map;
 	justPaused: boolean;
 	validMoves: any[];
+	fingerDown: boolean;
 
 	create() {
 		let levelSource;
